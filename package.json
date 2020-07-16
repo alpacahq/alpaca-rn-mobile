@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "apisauce": "0.14.3",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "moment-timezone": "^0.5.23",
     "react": "16.8.3",
     "react-native": "0.59.10",
