@@ -22,20 +22,20 @@ You can find apps on [App store](https://itunes.apple.com/us/app/alpaca-dashboar
 ## Screenshot
 
 <div align="center">
-  <img width=170 src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s1.png"/>
-  <img width=170 src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s2.png"/>
-  <img width=170 src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s3.png"/>
-  <img width=170 src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s4.png"/>
+  <img width="20%" src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s1.png"/>
+  <img width="20%" src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s2.png"/>
+  <img width="20%" src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s3.png"/>
+  <img width="20%" src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s4.png"/>
 </div>
 
 ## Running the project
 
 - Clone this project
 ```
-git clone < project-url.git >
+git clone https://github.com/alpacahq/alpaca-rn-mobile.git
 ```
 
-- NPM install
+- Install dependencies
 ```
 npm install
 ```
@@ -55,15 +55,12 @@ react-native run-ios
 react-native run-android
 ```
 
-- Get API Key
-
-In order to start trading with Alpaca API, please sign up [here](https://alpaca.markets/).
-
 - Get client id and secret
 
-You will need to specify client id and secret in `App/config.js` to run the project.
+You will need to specify client id and secret in `App/config.js` to get the app working.
 
-Go to [OAuth Apps](https://app.alpaca.markets/brokerage/apps/manage) and get client id/secret.
+Go to [OAuth Apps](https://app.alpaca.markets/brokerage/apps/manage) and get client id/secret by creating new app.
+ (The redirect uri should be `alpacamobile://oauth`)
 
 ### Disclosures
 
