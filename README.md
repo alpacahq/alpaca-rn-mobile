@@ -22,10 +22,10 @@ You can find apps on [App store](https://itunes.apple.com/us/app/alpaca-dashboar
 ## Screenshot
 
 <div align="center">
-  <img width=170 src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s1.png"/>
-  <img width=170 src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s2.png"/>
-  <img width=170 src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s3.png"/>
-  <img width=170 src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s4.png"/>
+  <img width="20%" src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s1.png"/>
+  <img width="20%" src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s2.png"/>
+  <img width="20%" src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s3.png"/>
+  <img width="20%" src ="https://github.com/alpacahq/alpaca-rn-mobile/blob/development/screenshots/s4.png"/>
 </div>
 
 ## Running the project
