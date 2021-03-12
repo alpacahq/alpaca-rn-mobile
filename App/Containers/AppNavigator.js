@@ -1,8 +1,6 @@
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import React from 'react'
 
-import MainScreen from './MainScreen'
-import SetupScreen from './User/SetupScreen'
 import StartScreen from './User/StartScreen'
 import RegisterScreen from './User/RegisterScreen'
 import SearchScreen from './Trade/SearchScreen'

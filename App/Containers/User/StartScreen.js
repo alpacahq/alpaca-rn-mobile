@@ -10,7 +10,6 @@ import {
     NativeModules
 } from 'react-native'
 import { connect } from 'react-redux'
-import { authorize } from 'react-native-app-auth';
 import RNPickerSelect from 'react-native-picker-select'
 import { CustomTabs } from 'react-native-custom-tabs';
 // import base64 from 'react-native-base64'

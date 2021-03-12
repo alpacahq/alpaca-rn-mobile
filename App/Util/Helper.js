@@ -1,8 +1,7 @@
-import { Platform } from 'react-native'
+import { Platform, Dimensions } from 'react-native'
 import moment from 'moment-timezone'
 import _ from 'lodash'
 import { showMessage, hideMessage } from "react-native-flash-message"
-import Dimensions from 'Dimensions'
 
 const { width } = Dimensions.get('window')
 
