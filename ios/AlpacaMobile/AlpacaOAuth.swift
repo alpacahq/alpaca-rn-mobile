@@ -1,9 +1,8 @@
 //
 //  AlpacaOAuth.swift
-//  mobileApp
+//  AlpacaMobile
 //
-//  Created by matata on 11/20/19.
-//  Copyright © 2019 Facebook. All rights reserved.
+//  Created by hakuna on 3/19/21.
 //
 
 import UIKit
