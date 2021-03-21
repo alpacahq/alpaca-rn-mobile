@@ -280,8 +280,8 @@ class TradeScreen extends Component {
     }
 
     render() {
-        const { navigation } = this.props
-        const value = navigation.getParam('value')
+        const { route } = this.props
+        const value = route.params?.value
 
         return (
             <TouchableWithoutFeedback onPress={() => dismissKeyboard()}>

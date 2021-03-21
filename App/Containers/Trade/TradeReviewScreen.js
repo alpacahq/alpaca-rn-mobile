@@ -111,9 +111,9 @@ class TradeReviewScreen extends Component {
     }
 
     render() {
-        const { navigation } = this.props
-        const value = navigation.getParam('value')
-        const orderData = navigation.getParam('orderData')
+        const { route } = this.props
+        const value = route.params?.value
+        const orderData = route.params?.orderData
 
         return (
             <View style={styles.mainContainer}>

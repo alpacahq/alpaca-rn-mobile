@@ -31,16 +31,16 @@ import SearchItem from './SearchItem';
 class SymbolScreen extends Component {
 
     componentDidMount() {
-        this.props.navigation.setOptions({
-            headerLeft: (
+        const { navigation, route, getBars } = this.props
+        navigation.setOptions({
+            headerLeft: () => (
                 <NavigationIcon
-                    onPress={() => this.props.navigation.pop()}
+                    onPress={() => navigation.pop()}
                     source={Images.back}
                 />
             ),
         })
-        const { navigation, getBars } = this.props
-        const value = navigation.getParam('value')
+        const value = route.params?.value
 
         getBars('1D', value.symbol, getYesterdayStart(), getYesterdayEnd(), 'yesterday')
         this.getData(value, getBars)
@@ -132,8 +132,8 @@ class SymbolScreen extends Component {
     }
 
     render() {
-        const { navigation } = this.props
-        const value = navigation.getParam('value')
+        const { route } = this.props
+        const value = route.params?.value
 
         return (
             <View style={styles.mainContainer}>
