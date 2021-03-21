@@ -81,16 +81,20 @@ class TradeScreen extends Component {
         ]
     }
 
-    static navigationOptions = (props) => {
-        const submitted = props.navigation.getParam('submitted')
-        return {
-            headerLeft: submitted ?
+    componentDidMount() {
+        const submitted = this.props.route.params?.submitted;
+        this.props.navigation.setOptions({
+            headerLeft: () => (
+                submitted ?
                 null :
-                <NavigationIcon
-                    onPress={() => props.navigation.pop()}
-                    source={Images.back}
-                />
-        }
+                (
+                    <NavigationIcon
+                        onPress={() => this.props.navigation.pop()}
+                        source={Images.back}
+                    />
+                )
+            ),
+        })
     }
 
     reviewOrder = (value) => {

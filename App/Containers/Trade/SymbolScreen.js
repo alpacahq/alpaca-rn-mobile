@@ -30,18 +30,15 @@ import SearchItem from './SearchItem';
 
 class SymbolScreen extends Component {
 
-    static navigationOptions = (props) => {
-        return {
+    componentDidMount() {
+        this.props.navigation.setOptions({
             headerLeft: (
                 <NavigationIcon
-                    onPress={() => props.navigation.pop()}
+                    onPress={() => this.props.navigation.pop()}
                     source={Images.back}
                 />
             ),
-        }
-    }
-
-    componentDidMount() {
+        })
         const { navigation, getBars } = this.props
         const value = navigation.getParam('value')
 

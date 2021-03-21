@@ -32,18 +32,20 @@ class LiquidationScreen extends Component {
         }
     }
 
-    static navigationOptions = (props) => {
-        const condition = props.navigation.getParam('condition')
-        return {
-            headerLeft: condition === 'LIQUIDATION_SUCCESS' ?
+    componentDidMount() {
+        const condition = this.props.route.params?.condition;
+        this.props.navigation.setOptions({
+            headerLeft: () => (
+                condition === 'LIQUIDATION_SUCCESS' ?
                 null :
                 (
                     <NavigationIcon
-                        onPress={() => props.navigation.pop()}
+                        onPress={() => this.props.navigation.pop()}
                         source={Images.back}
                     />
                 )
-        }
+            ),
+        })
     }
 
     /**

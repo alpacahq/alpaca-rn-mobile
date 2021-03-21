@@ -27,26 +27,26 @@ class SuspendAPIScreen extends Component {
         this.setState({
             condition: this.props.account.trade_suspended_by_user ? 'RECOVERING_API' : 'SUSPENDING_API'
         })
+
+        const condition = this.props.route.params?.condition;
+        this.props.navigation.setOptions({
+            headerLeft: () => (
+                condition === 'SUSPENDING_API_SUCCESS' ?
+                null :
+                (
+                    <NavigationIcon
+                        onPress={() => this.props.navigation.pop()}
+                        source={Images.back}
+                    />
+                )
+            ),
+        })
     }
 
     componentWillReceiveProps(nextProps) {
         if (!this.props.account.trade_suspended_by_user && nextProps.account.trade_suspended_by_user) {
             this.setState({ condition: 'SUSPENDING_API_SUCCESS' })
             this.props.navigation.setParams({ condition: 'SUSPENDING_API_SUCCESS' })
-        }
-    }
-
-    static navigationOptions = (props) => {
-        const condition = props.navigation.getParam('condition')
-        return {
-            headerLeft: condition === 'SUSPENDING_API_SUCCESS' ?
-                null :
-                (
-                    <NavigationIcon
-                        onPress={() => props.navigation.pop()}
-                        source={Images.back}
-                    />
-                )
         }
     }
 

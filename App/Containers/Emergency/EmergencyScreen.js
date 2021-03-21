@@ -21,15 +21,16 @@ import NavigationIcon from '../../Components/NavigationIcon'
 
 class EmergencyScreen extends Component {
 
-    static navigationOptions = (props) => {
-        return {
-            headerRight: (
+    componentDidMount() {
+        this.props.navigation.setOptions({
+            headerLeft: null,
+            headerRight: () => (
                 <NavigationIcon
-                    onPress={() => props.navigation.navigate('Search')}
+                    onPress={() => this.props.navigation.navigate('Search')}
                     source={Images.search}
                 />
             ),
-        }
+        })
     }
 
     logOut = async () => {

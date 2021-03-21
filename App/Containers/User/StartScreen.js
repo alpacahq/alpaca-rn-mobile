@@ -55,7 +55,7 @@ class StartScreen extends Component {
     }
 
     async componentDidMount() {
-        const operation = this.props.navigation.getParam("operation");
+        const operation = this.props.route.params?.operation;
         if (Platform.OS === 'android' && operation !== "logout") {
             Linking.getInitialURL().then(url => {
               this.exchangeToken(url);

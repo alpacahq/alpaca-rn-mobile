@@ -32,15 +32,15 @@ class SearchScreen extends Component {
         filteredItems: []
     }
 
-    static navigationOptions = (props) => {
-        return {
-            headerLeft: (
+    componentDidMount() {
+        this.props.navigation.setOptions({
+            headerLeft: () => (
                 <NavigationIcon
-                    onPress={() => props.navigation.pop()}
+                    onPress={() => this.props.navigation.pop()}
                     source={Images.back}
                 />
             ),
-        }
+        })
     }
 
     /**

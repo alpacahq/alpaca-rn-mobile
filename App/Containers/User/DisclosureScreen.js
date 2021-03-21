@@ -11,11 +11,11 @@ import NavigationIcon from '../../Components/NavigationIcon'
 
 class DisclosureScreen extends Component {
 
-    static navigationOptions = (props) => {
-        return {
-            headerLeft: (
+    componentDidMount() {
+        this.props.navigation.setOptions({
+            headerLeft: () => (
                 <NavigationIcon
-                    onPress={() => props.navigation.pop()}
+                    onPress={() => this.props.navigation.pop()}
                     source={Images.back}
                 />
             ),
@@ -25,7 +25,7 @@ class DisclosureScreen extends Component {
                 fontWeight: 'bold',
                 fontSize: 22
             },
-        }
+        })
     }
 
     render() {

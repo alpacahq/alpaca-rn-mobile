@@ -27,26 +27,26 @@ class CancelOrderScreen extends Component {
 
     componentDidMount() {
         this.setState({ openOrders: this.props.openOrders })
+
+        const condition = this.props.route.params?.condition;
+        this.props.navigation.setOptions({
+            headerLeft: () => (
+                condition === 'CANCEL_ORDER_SUCCESS' ?
+                null :
+                (
+                    <NavigationIcon
+                        onPress={() => this.props.navigation.pop()}
+                        source={Images.back}
+                    />
+                )
+            ),
+        })
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.cancelingOrder && !nextProps.cancelingOrder) {
             this.setState({ condition: 'CANCEL_ORDER_SUCCESS' })
             this.props.navigation.setParams({ condition: 'CANCEL_ORDER_SUCCESS' })
-        }
-    }
-
-    static navigationOptions = (props) => {
-        const condition = props.navigation.getParam('condition')
-        return {
-            headerLeft: condition === 'CANCEL_ORDER_SUCCESS' ?
-                null :
-                (
-                    <NavigationIcon
-                        onPress={() => props.navigation.pop()}
-                        source={Images.back}
-                    />
-                )
         }
     }
 

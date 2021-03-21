@@ -38,19 +38,16 @@ class OverviewScreen extends Component {
         mergeOrders: []
     }
 
-    static navigationOptions = (props) => {
-        return {
+    componentDidMount() {
+        this.props.navigation.setOptions({
             headerLeft: null,
-            headerRight: (
+            headerRight: () => (
                 <NavigationIcon
-                    onPress={() => props.navigation.navigate('Search')}
+                    onPress={() => this.props.navigation.navigate('Search')}
                     source={Images.search}
                 />
             ),
-        }
-    }
-
-    componentDidMount() {
+        })
         this.props.getAssets() // Get assets
         this.getData()
         this.timer = setInterval(() => this.getData(false), 10000) // Refresh data every 10 seconds
