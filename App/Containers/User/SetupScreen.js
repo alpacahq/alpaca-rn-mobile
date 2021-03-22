@@ -4,12 +4,12 @@ import {
     Text,
     TextInput,
     StyleSheet,
-    AsyncStorage,
     Linking
 } from 'react-native'
 import { connect } from 'react-redux'
 import RNPickerSelect from 'react-native-picker-select'
 import CheckBox from 'react-native-check-box'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import AppActions from '../../Redux/AppRedux'
 import {

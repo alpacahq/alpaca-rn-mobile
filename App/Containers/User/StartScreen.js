@@ -4,7 +4,6 @@ import {
     Text,
     Image,
     StyleSheet,
-    AsyncStorage,
     Linking,
     Platform,
     NativeModules
@@ -12,7 +11,7 @@ import {
 import { connect } from 'react-redux'
 import RNPickerSelect from 'react-native-picker-select'
 import { CustomTabs } from 'react-native-custom-tabs';
-// import base64 from 'react-native-base64'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import AppActions from '../../Redux/AppRedux'
 import {

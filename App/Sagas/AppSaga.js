@@ -1,5 +1,5 @@
 import { call, put } from 'redux-saga/effects'
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import AppActions from '../Redux/AppRedux'
 
 export function* appStartAttempt(api, action) {
