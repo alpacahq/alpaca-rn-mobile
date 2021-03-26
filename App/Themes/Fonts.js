@@ -3,7 +3,7 @@ import { size } from '../Util/Helper'
 
 const type = {
     base: 'Avenir-Book',
-    bold: 'Avenir-Black',
+    bold: 'Avenir-Black'
 }
 
 const style = {
