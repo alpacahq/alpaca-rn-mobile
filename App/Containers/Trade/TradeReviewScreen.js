@@ -1,18 +1,8 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    TextInput,
-    ScrollView
-} from 'react-native'
+import { View, Text, TextInput, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 
-import {
-    ApplicationStyles,
-    Images,
-    Colors,
-    Fonts
-} from '../../Themes'
+import { ApplicationStyles, Images, Colors, Fonts } from '../../Themes'
 import OrdersActions from '../../Redux/OrdersRedux'
 import NavigationIcon from '../../Components/NavigationIcon'
 import Button from '../../Components/Button'
@@ -21,27 +11,31 @@ import KeyValueItem from './KeyValueItem'
 import { formatValue, size } from '../../Util/Helper'
 
 class TradeReviewScreen extends Component {
-
     state = {
-        submitted: false,
+        submitted: false
     }
 
-    static navigationOptions = (props) => {
-        const submitted = props.navigation.getParam('submitted')
-        return {
-            headerLeft: submitted ?
-                null :
-                <NavigationIcon
-                    onPress={() => props.navigation.pop()}
-                    source={Images.back}
-                />
-        }
+    componentDidMount() {
+        const submitted = this.props.route.params?.submitted
+        this.props.navigation.setOptions({
+            headerLeft: () =>
+                submitted ? null : (
+                    <NavigationIcon
+                        onPress={() => this.props.navigation.pop()}
+                        source={Images.back}
+                    />
+                )
+        })
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.postingOrder && !nextProps.postingOrder && nextProps.orderResult) {
+        if (
+            this.props.postingOrder &&
+            !nextProps.postingOrder &&
+            nextProps.orderResult
+        ) {
             this.setState({
-                submitted: true,
+                submitted: true
             })
             this.props.navigation.setParams({ submitted: true })
         }
@@ -51,15 +45,17 @@ class TradeReviewScreen extends Component {
         const { orderResult, postingOrder, postOrder } = this.props
         const { submitted } = this.state
 
-        let limitPrice = orderData.limit_price ? `$${formatValue(orderData.limit_price)}` : '-'
-        let stopPrice = orderData.stop_price ? `$${formatValue(orderData.stop_price)}` : '-'
+        let limitPrice = orderData.limit_price
+            ? `$${formatValue(orderData.limit_price)}`
+            : '-'
+        let stopPrice = orderData.stop_price
+            ? `$${formatValue(orderData.stop_price)}`
+            : '-'
         let content
         if (submitted) {
             content = (
                 <View style={{ flex: 1 }}>
-                    <Text style={styles.label}>
-                        Order Submitted
-                    </Text>
+                    <Text style={styles.label}>Order Submitted</Text>
                     <ScrollView style={styles.jsonData}>
                         <Text style={{ color: 'white' }}>
                             {JSON.stringify(orderResult, undefined, 4)}
@@ -83,13 +79,19 @@ class TradeReviewScreen extends Component {
                         item={value}
                         isLargeStyle
                     />
-                    <KeyValueItem keys='Side' value={orderData.side} />
-                    <KeyValueItem keys='Shares' value={orderData.qty} />
-                    <KeyValueItem keys='Type' value={orderData.type} />
-                    <KeyValueItem keys='Time in Force' value={orderData.time_in_force} />
-                    <KeyValueItem keys='Limit Price' value={limitPrice} />
-                    <KeyValueItem keys='Stop Price' value={stopPrice} />
-                    <KeyValueItem keys='Extended Hours' value={orderData.extended_hours.toString()} />
+                    <KeyValueItem keys="Side" value={orderData.side} />
+                    <KeyValueItem keys="Shares" value={orderData.qty} />
+                    <KeyValueItem keys="Type" value={orderData.type} />
+                    <KeyValueItem
+                        keys="Time in Force"
+                        value={orderData.time_in_force}
+                    />
+                    <KeyValueItem keys="Limit Price" value={limitPrice} />
+                    <KeyValueItem keys="Stop Price" value={stopPrice} />
+                    <KeyValueItem
+                        keys="Extended Hours"
+                        value={orderData.extended_hours.toString()}
+                    />
                     <Button
                         style={styles.button}
                         label="Click to Submit"
@@ -107,9 +109,9 @@ class TradeReviewScreen extends Component {
     }
 
     render() {
-        const { navigation } = this.props
-        const value = navigation.getParam('value')
-        const orderData = navigation.getParam('orderData')
+        const { route } = this.props
+        const value = route.params?.value
+        const orderData = route.params?.orderData
 
         return (
             <View style={styles.mainContainer}>
@@ -137,7 +139,7 @@ const styles = {
         position: 'absolute',
         bottom: 0,
         left: 0,
-        right: 0,
+        right: 0
     },
     jsonData: {
         flex: 1,
@@ -151,19 +153,20 @@ const styles = {
         top: 0,
         bottom: size(50),
         left: 0,
-        right: 0,
-    },
+        right: 0
+    }
 }
 
 const mapStateToProps = (state) => {
     return {
         postingOrder: state.orders.postingOrder,
-        orderResult: state.orders.orderResult,
+        orderResult: state.orders.orderResult
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    postOrder: data => dispatch(OrdersActions.postOrderAttempt(data, 'single')),
+    postOrder: (data) =>
+        dispatch(OrdersActions.postOrderAttempt(data, 'single'))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TradeReviewScreen)

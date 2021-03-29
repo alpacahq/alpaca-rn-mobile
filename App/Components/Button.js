@@ -8,31 +8,42 @@ import {
     ViewPropTypes
 } from 'react-native'
 
-import {
-    Colors,
-    Fonts
-} from '../Themes';
+import { Colors, Fonts } from '../Themes'
 
 // NOTE
 // button is flex so always full width
 
 const Button = ({
-    style, type, height,
-    color, labelColor, borderRadius, label,
-    disabled, isLoading,
-    activeOpacity, onPress,
+    style,
+    type,
+    height,
+    color,
+    labelColor,
+    borderRadius,
+    label,
+    disabled,
+    isLoading,
+    activeOpacity,
+    onPress
 }) => {
-
     const renderLabel = () => (
         <View style={{ flex: 1 }}>
-            <Text style={[styles.label, { color: (type === 'fill') ? labelColor || 'white' : color }]}>
+            <Text
+                style={[
+                    styles.label,
+                    { color: type === 'fill' ? labelColor || 'white' : color }
+                ]}
+            >
                 {label}
             </Text>
         </View>
     )
 
     const renderLoading = () => (
-        <ActivityIndicator color={(type === 'fill') ? labelColor || 'white' : color} size="small" />
+        <ActivityIndicator
+            color={type === 'fill' ? labelColor || 'white' : color}
+            size="small"
+        />
     )
 
     const Container = disabled ? View : TouchableHighlight
@@ -43,24 +54,26 @@ const Button = ({
                 style={[
                     {
                         opacity: disabled ? (isLoading ? 0.8 : 0.5) : 1,
-                        height,
-                    },
+                        height
+                    }
                 ]}
                 activeOpacity={activeOpacity}
                 underlayColor="transparent"
                 onPress={onPress}
             >
-                <View style={[
-                    styles.button,
-                    {
-                        backgroundColor: (type === 'fill') ? color : 'transparent',
-                        borderWidth: (type === 'outline') ? 1 : 0,
-                        borderColor: color,
-                        borderRadius,
-                    },
-                ]}
+                <View
+                    style={[
+                        styles.button,
+                        {
+                            backgroundColor:
+                                type === 'fill' ? color : 'transparent',
+                            borderWidth: type === 'outline' ? 1 : 0,
+                            borderColor: color,
+                            borderRadius
+                        }
+                    ]}
                 >
-                    {isLoading ? renderLoading() : (label ? renderLabel() : null)}
+                    {isLoading ? renderLoading() : label ? renderLabel() : null}
                 </View>
             </Container>
         </View>
@@ -78,7 +91,7 @@ Button.propTypes = {
     disabled: PropTypes.bool,
     isLoading: PropTypes.bool,
     activeOpacity: PropTypes.number,
-    onPress: PropTypes.func,
+    onPress: PropTypes.func
 }
 
 Button.defaultProps = {
@@ -91,7 +104,7 @@ Button.defaultProps = {
     label: null,
     disabled: false,
     isLoading: false,
-    activeOpacity: 0.9,
+    activeOpacity: 0.9
 }
 
 const styles = {
@@ -99,7 +112,7 @@ const styles = {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     label: {
         ...Fonts.style.h3,
@@ -108,8 +121,8 @@ const styles = {
         textAlign: 'center',
         paddingLeft: 5,
         paddingRight: 5,
-        paddingBottom: 2,
-    },
+        paddingBottom: 2
+    }
 }
 
 export default Button

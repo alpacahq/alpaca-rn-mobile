@@ -40,7 +40,7 @@ export const getOrdersAttempt = (state, action) => {
 
 export const getOrdersSuccess = (state, action) => {
     let { status, data } = action
-    data = data.map(item => {
+    data = data.map((item) => {
         item = {
             ...item,
             tag: status
@@ -49,14 +49,28 @@ export const getOrdersSuccess = (state, action) => {
     })
 
     if (status === 'closed') {
-        return state.merge({ fetching: false, error: false, errorMessage: '', closedOrders: data })
+        return state.merge({
+            fetching: false,
+            error: false,
+            errorMessage: '',
+            closedOrders: data
+        })
     } else if (status === 'open') {
-        return state.merge({ fetching: false, error: false, errorMessage: '', openOrders: data })
+        return state.merge({
+            fetching: false,
+            error: false,
+            errorMessage: '',
+            openOrders: data
+        })
     }
 }
 
 export const getOrdersFailure = (state, action) => {
-    return state.merge({ fetching: false, error: true, errorMessage: action.error })
+    return state.merge({
+        fetching: false,
+        error: true,
+        errorMessage: action.error
+    })
 }
 
 export const cancelOrderAttempt = (state, action) => {
@@ -64,11 +78,19 @@ export const cancelOrderAttempt = (state, action) => {
 }
 
 export const cancelOrderSuccess = (state, action) => {
-    return state.merge({ cancelingOrder: false, error: false, errorMessage: '' })
+    return state.merge({
+        cancelingOrder: false,
+        error: false,
+        errorMessage: ''
+    })
 }
 
 export const cancelOrderFailure = (state, action) => {
-    return state.merge({ cancelingOrder: false, error: true, errorMessage: action.error })
+    return state.merge({
+        cancelingOrder: false,
+        error: true,
+        errorMessage: action.error
+    })
 }
 
 export const postOrderAttempt = (state, action) => {
@@ -76,11 +98,18 @@ export const postOrderAttempt = (state, action) => {
 }
 
 export const postOrderSuccess = (state, action) => {
-    return state.merge({ postingOrder: false, error: false, errorMessage: '', orderResult: action.data })
+    return state.merge({
+        postingOrder: false,
+        error: false,
+        errorMessage: '',
+        orderResult: action.data
+    })
 }
 
 export const postOrderFailure = (state, action) => {
-    let postOrderErrorMessages = state.postOrderErrorMessages.concat(action.error).concat("\n")
+    let postOrderErrorMessages = state.postOrderErrorMessages
+        .concat(action.error)
+        .concat('\n')
     return state.merge({
         postingOrder: false,
         error: true,
@@ -90,7 +119,11 @@ export const postOrderFailure = (state, action) => {
 }
 
 export const resetOrderStatus = (state, action) => {
-    return state.merge({ postOrderFailCount: 0, orderResult: null, postOrderErrorMessages: '' })
+    return state.merge({
+        postOrderFailCount: 0,
+        orderResult: null,
+        postOrderErrorMessages: ''
+    })
 }
 
 /* ------------- Hookup Reducers To Types ------------- */

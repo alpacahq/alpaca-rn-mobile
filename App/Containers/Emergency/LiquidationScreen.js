@@ -1,26 +1,15 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    ScrollView,
-    Linking
-} from 'react-native'
+import { View, Text, ScrollView, Linking } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
 import OrdersActions from '../../Redux/OrdersRedux'
-import {
-    ApplicationStyles,
-    Images,
-    Colors,
-    Fonts
-} from '../../Themes'
+import { ApplicationStyles, Images, Colors, Fonts } from '../../Themes'
 import { size } from '../../Util/Helper'
 import Button from '../../Components/Button'
 import NavigationIcon from '../../Components/NavigationIcon'
 
 class LiquidationScreen extends Component {
-
     state = {
         condition: 'LIQUIDATION'
     }
@@ -28,55 +17,52 @@ class LiquidationScreen extends Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.postingOrder && !nextProps.postingOrder) {
             this.setState({ condition: 'LIQUIDATION_SUCCESS' })
-            this.props.navigation.setParams({ condition: 'LIQUIDATION_SUCCESS' })
+            this.props.navigation.setParams({
+                condition: 'LIQUIDATION_SUCCESS'
+            })
         }
     }
 
-    static navigationOptions = (props) => {
-        const condition = props.navigation.getParam('condition')
-        return {
-            headerLeft: condition === 'LIQUIDATION_SUCCESS' ?
-                null :
-                (
+    componentDidMount() {
+        const condition = this.props.route.params?.condition
+        this.props.navigation.setOptions({
+            headerLeft: () =>
+                condition === 'LIQUIDATION_SUCCESS' ? null : (
                     <NavigationIcon
-                        onPress={() => props.navigation.pop()}
+                        onPress={() => this.props.navigation.pop()}
                         source={Images.back}
                     />
                 )
-        }
+        })
     }
 
     /**
      * Post your order
      */
     requestOrders = () => {
-        const {
-            positions,
-            postOrder,
-            resetOrderStatus
-        } = this.props
+        const { positions, postOrder, resetOrderStatus } = this.props
 
         resetOrderStatus()
-        positions.map(item => {
-            const side = item.qty > 0 ? "sell" : "buy";
+        positions.map((item) => {
+            const side = item.qty > 0 ? 'sell' : 'buy'
             const updatedItem = {
                 ...item,
-                type: "market",
-                time_in_force: "gtc",
+                type: 'market',
+                time_in_force: 'gtc',
                 side,
                 qty: Math.abs(item.qty)
-            };
-            postOrder(updatedItem);
+            }
+            postOrder(updatedItem)
         })
     }
 
-    /** 
+    /**
      * Append symbols with commma from positions
-    */
+     */
     getSymbols = () => {
         const { positions } = this.props
         let symbols = ''
-        positions.map(item => {
+        positions.map((item) => {
             let div = symbols.length > 0 ? ', ' : ''
             symbols = symbols + div + item.symbol
         })
@@ -88,19 +74,26 @@ class LiquidationScreen extends Component {
      * Open url in browser
      */
     openURL = () => {
-        const docUrl = 'https://docs.alpaca.markets/broker-functions/pdt-protection/'
-        Linking.canOpenURL(docUrl).then(supported => {
+        const docUrl =
+            'https://docs.alpaca.markets/broker-functions/pdt-protection/'
+        Linking.canOpenURL(docUrl).then((supported) => {
             if (supported) {
-                Linking.openURL(docUrl);
+                Linking.openURL(docUrl)
             } else {
-                console.log("Don't know how to open URI: " + docUrl);
+                console.log("Don't know how to open URI: " + docUrl)
             }
         })
     }
 
     renderContent = () => {
         const { condition } = this.state
-        const { positions, postingOrder, orderResult, postOrderFailCount, postOrderErrorMessages } = this.props
+        const {
+            positions,
+            postingOrder,
+            orderResult,
+            postOrderFailCount,
+            postOrderErrorMessages
+        } = this.props
 
         let content
         if (condition === 'LIQUIDATION') {
@@ -108,20 +101,29 @@ class LiquidationScreen extends Component {
                 <View style={styles.container}>
                     <ScrollView style={styles.scroll}>
                         <Text style={styles.h1}>
-                            Liquidating{"\n"}
+                            Liquidating{'\n'}
                             All Positions
                         </Text>
                         <Text style={[styles.h3, { marginTop: 20 }]}>
-                            You are placing an order to sell all your positions with market order within Alpaca's Pattern Day Trader (PDT) Protection.
-                            Therefore, some or all of your orders may get rejected if it could potentially result in the account being flagged for PDT.
-                            This protection triggers only when the account equity is less than $25k at the time of order submission. (Please see{" "}
-                            <Text style={styles.linkText} onPress={this.openURL}>
+                            You are placing an order to sell all your positions
+                            with market order within Alpaca's Pattern Day Trader
+                            (PDT) Protection. Therefore, some or all of your
+                            orders may get rejected if it could potentially
+                            result in the account being flagged for PDT. This
+                            protection triggers only when the account equity is
+                            less than $25k at the time of order submission.
+                            (Please see{' '}
+                            <Text
+                                style={styles.linkText}
+                                onPress={this.openURL}
+                            >
                                 the Doc
-                            </Text>
-                            {" "}for more information){"\n"}
+                            </Text>{' '}
+                            for more information){'\n'}
                         </Text>
                         <Text style={styles.h3}>
-                            You currently have {positions.length} total positions in {this.getSymbols()}.
+                            You currently have {positions.length} total
+                            positions in {this.getSymbols()}.
                         </Text>
                     </ScrollView>
                     <Button
@@ -136,7 +138,10 @@ class LiquidationScreen extends Component {
                 </View>
             )
         } else if (condition === 'LIQUIDATION_SUCCESS') {
-            const orderStatus = postOrderFailCount > 0 ? `Order Submitted (${postOrderFailCount} orders rejected)` : 'Order Submitted'
+            const orderStatus =
+                postOrderFailCount > 0
+                    ? `Order Submitted (${postOrderFailCount} orders rejected)`
+                    : 'Order Submitted'
             let contentOrderResult
 
             if (orderResult) {
@@ -154,9 +159,7 @@ class LiquidationScreen extends Component {
             }
             content = (
                 <View style={styles.container}>
-                    <Text style={styles.label}>
-                        {orderStatus}
-                    </Text>
+                    <Text style={styles.label}>{orderStatus}</Text>
                     <ScrollView style={styles.jsonData}>
                         {contentOrderResult}
                     </ScrollView>
@@ -176,11 +179,7 @@ class LiquidationScreen extends Component {
     }
 
     render() {
-        return (
-            <View style={styles.mainContainer}>
-                {this.renderContent()}
-            </View>
-        )
+        return <View style={styles.mainContainer}>{this.renderContent()}</View>
     }
 }
 
@@ -188,17 +187,17 @@ const styles = {
     ...ApplicationStyles.screen,
     h1: {
         ...Fonts.style.h1,
-        color: Colors.BLACK,
+        color: Colors.BLACK
     },
     h3: {
         ...Fonts.style.h3,
-        color: Colors.BLACK,
+        color: Colors.BLACK
     },
     button: {
         position: 'absolute',
         bottom: 0,
         left: 0,
-        right: 0,
+        right: 0
     },
     jsonData: {
         flex: 1,
@@ -213,7 +212,7 @@ const styles = {
     linkText: {
         ...Fonts.style.h3,
         color: Colors.BLACK,
-        textDecorationLine: 'underline',
+        textDecorationLine: 'underline'
     }
 }
 
@@ -229,7 +228,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        postOrder: data => dispatch(OrdersActions.postOrderAttempt(data, 'group')),
+        postOrder: (data) =>
+            dispatch(OrdersActions.postOrderAttempt(data, 'group')),
         resetOrderStatus: () => dispatch(OrdersActions.resetOrderStatus())
     }
 }
