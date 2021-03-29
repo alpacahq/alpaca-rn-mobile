@@ -2,19 +2,12 @@ import React, { Component } from 'react'
 import { View, Text, Image, FlatList, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 
-import {
-    ApplicationStyles,
-    Images,
-    Colors,
-    Metrics,
-    Fonts
-} from '../../Themes'
+import { ApplicationStyles, Images, Colors, Metrics, Fonts } from '../../Themes'
 import { size } from '../../Util/Helper'
 import PositionItem from './PositionItem'
 import NavigationIcon from '../../Components/NavigationIcon'
 
 class PositionScreen extends Component {
-
     componentDidMount() {
         this.props.navigation.setOptions({
             headerLeft: null,
@@ -23,7 +16,7 @@ class PositionScreen extends Component {
                     onPress={() => this.props.navigation.navigate('Search')}
                     source={Images.search}
                 />
-            ),
+            )
         })
     }
 
@@ -37,15 +30,18 @@ class PositionScreen extends Component {
                     <FlatList
                         style={styles.list}
                         data={positions}
-                        keyExtractor={item => item.asset_id}
+                        keyExtractor={(item) => item.asset_id}
                         renderItem={({ item, index }) => {
                             return (
                                 <PositionItem
                                     position={item}
                                     onPress={() =>
-                                        this.props.navigation.navigate('Symbol', {
-                                            value: item
-                                        })
+                                        this.props.navigation.navigate(
+                                            'Symbol',
+                                            {
+                                                value: item
+                                            }
+                                        )
                                     }
                                 />
                             )
@@ -53,7 +49,9 @@ class PositionScreen extends Component {
                     />
                     <Text
                         style={[styles.label, { marginTop: 10 }]}
-                        onPress={() => this.props.navigation.navigate('Disclosure')}
+                        onPress={() =>
+                            this.props.navigation.navigate('Disclosure')
+                        }
                     >
                         Disclosures
                     </Text>
@@ -61,7 +59,6 @@ class PositionScreen extends Component {
             </View>
         )
     }
-
 }
 
 const styles = {

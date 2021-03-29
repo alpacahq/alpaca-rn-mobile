@@ -1,18 +1,9 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    FlatList
-} from 'react-native'
+import { View, Text, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
-import {
-    ApplicationStyles,
-    Images,
-    Colors,
-    Fonts
-} from '../../Themes'
+import { ApplicationStyles, Images, Colors, Fonts } from '../../Themes'
 import AssetsActions from '../../Redux/AssetsRedux'
 import {
     convert,
@@ -25,11 +16,10 @@ import {
 } from '../../Util/Helper'
 import NavigationIcon from '../../Components/NavigationIcon'
 import Button from '../../Components/Button'
-import OrderItem from '../Order/OrderItem';
-import SearchItem from './SearchItem';
+import OrderItem from '../Order/OrderItem'
+import SearchItem from './SearchItem'
 
 class SymbolScreen extends Component {
-
     componentDidMount() {
         const { navigation, route, getBars } = this.props
         navigation.setOptions({
@@ -38,11 +28,17 @@ class SymbolScreen extends Component {
                     onPress={() => navigation.pop()}
                     source={Images.back}
                 />
-            ),
+            )
         })
         const value = route.params?.value
 
-        getBars('1D', value.symbol, getYesterdayStart(), getYesterdayEnd(), 'yesterday')
+        getBars(
+            '1D',
+            value.symbol,
+            getYesterdayStart(),
+            getYesterdayEnd(),
+            'yesterday'
+        )
         this.getData(value, getBars)
         // this.timer = setInterval(() => this.getData(value, getBars), 5000)
     }
@@ -63,17 +59,24 @@ class SymbolScreen extends Component {
         let currentStockPrice = 0
 
         if (assets) {
-            assets.map(assetItem => {
+            assets.map((assetItem) => {
                 if (assetItem.symbol === value.symbol) {
-                    currentStockPrice = assetItem.todayBar && assetItem.todayBar.o
+                    currentStockPrice =
+                        assetItem.todayBar && assetItem.todayBar.o
                 }
             })
         }
 
-        positions.map(position => {
+        positions.map((position) => {
             if (position.symbol === value.symbol) {
-                mainValue = `${position.qty}@${formatValue(position.avg_entry_price)}`
-                percentValue = ((currentStockPrice - position.avg_entry_price) / position.avg_entry_price * 100).toFixed(2)
+                mainValue = `${position.qty}@${formatValue(
+                    position.avg_entry_price
+                )}`
+                percentValue = (
+                    ((currentStockPrice - position.avg_entry_price) /
+                        position.avg_entry_price) *
+                    100
+                ).toFixed(2)
                 plStyle = percentValue >= 0 ? styles.upText : styles.downText
             }
         })
@@ -86,32 +89,24 @@ class SymbolScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.positionContain}>
-                    <Text style={styles.label}>
-                        Positions
-                    </Text>
+                    <Text style={styles.label}>Positions</Text>
                     {mainValue && (
                         <View style={styles.rowContainer}>
-                            <Text style={styles.h3}>
-                                {mainValue}
-                            </Text>
+                            <Text style={styles.h3}>{mainValue}</Text>
                             <Text style={plStyle}>
                                 {convert(percentValue, true)}
                             </Text>
                         </View>
                     )}
                 </View>
-                <Text style={styles.label}>
-                    Orders
-                </Text>
+                <Text style={styles.label}>Orders</Text>
                 {filteredOrders && (
                     <FlatList
                         style={styles.list}
                         data={filteredOrders}
-                        keyExtractor={item => item.id}
+                        keyExtractor={(item) => item.id}
                         renderItem={({ item, index }) => {
-                            return (
-                                <OrderItem order={item} />
-                            )
+                            return <OrderItem order={item} />
                         }}
                     />
                 )}
@@ -137,10 +132,7 @@ class SymbolScreen extends Component {
 
         return (
             <View style={styles.mainContainer}>
-                <SearchItem
-                    item={value}
-                    isLargeStyle
-                />
+                <SearchItem item={value} isLargeStyle />
                 {this.renderValueDetail(value)}
             </View>
         )
@@ -159,11 +151,11 @@ const styles = {
     },
     upText: {
         ...Fonts.style.h3,
-        color: Colors.COLOR_GREEN,
+        color: Colors.COLOR_GREEN
     },
     downText: {
         ...Fonts.style.h3,
-        color: Colors.COLOR_DARK_RED,
+        color: Colors.COLOR_DARK_RED
     },
     positionContain: {
         marginTop: size(40),
@@ -179,11 +171,11 @@ const styles = {
         position: 'absolute',
         bottom: 0,
         left: 0,
-        right: 0,
+        right: 0
     },
     list: {
         flex: 1,
-        marginTop: 10,
+        marginTop: 10
     }
 }
 
@@ -197,8 +189,11 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    getBars: (timeframe, symbols, start, end, day) => dispatch(AssetsActions.getBarsAttempt(timeframe, symbols, start, end, day)),
-    resetBars: () => dispatch(AssetsActions.resetBars()),
+    getBars: (timeframe, symbols, start, end, day) =>
+        dispatch(
+            AssetsActions.getBarsAttempt(timeframe, symbols, start, end, day)
+        ),
+    resetBars: () => dispatch(AssetsActions.resetBars())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SymbolScreen)

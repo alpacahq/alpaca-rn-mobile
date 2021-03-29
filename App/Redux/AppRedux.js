@@ -6,7 +6,7 @@ const { Types, Creators } = createActions({
     appStartAttempt: ['data'],
     exchangeTokenAttempt: ['data'],
     exchangeTokenSuccess: ['data'],
-    exchangeTokenFailure: ['error'],
+    exchangeTokenFailure: ['error']
 })
 
 export const AppTypes = Types
@@ -30,11 +30,20 @@ export const exchangeTokenAttempt = (state, action) => {
 }
 
 export const exchangeTokenSuccess = (state, action) => {
-    return state.merge({ fetching: false, error: false, errorMessage: '', accessToken: action.data })
+    return state.merge({
+        fetching: false,
+        error: false,
+        errorMessage: '',
+        accessToken: action.data
+    })
 }
 
 export const exchangeTokenFailure = (state, action) => {
-    return state.merge({ fetching: false, error: true, errorMessage: action.error })
+    return state.merge({
+        fetching: false,
+        error: true,
+        errorMessage: action.error
+    })
 }
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -42,5 +51,5 @@ export const reducer = createReducer(INITIAL_STATE, {
     [Types.APP_START_ATTEMPT]: appStartAttempt,
     [Types.EXCHANGE_TOKEN_ATTEMPT]: exchangeTokenAttempt,
     [Types.EXCHANGE_TOKEN_SUCCESS]: exchangeTokenSuccess,
-    [Types.EXCHANGE_TOKEN_FAILURE]: exchangeTokenFailure,
+    [Types.EXCHANGE_TOKEN_FAILURE]: exchangeTokenFailure
 })

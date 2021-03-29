@@ -4,28 +4,22 @@ import {
     Text,
     TextInput,
     ScrollView,
-    TouchableWithoutFeedback,
+    TouchableWithoutFeedback
 } from 'react-native'
 import { connect } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import dismissKeyboard from 'react-native-dismiss-keyboard'
 import CheckBox from 'react-native-check-box'
 
-import {
-    ApplicationStyles,
-    Images,
-    Colors,
-    Fonts
-} from '../../Themes'
+import { ApplicationStyles, Images, Colors, Fonts } from '../../Themes'
 import { size, showAlertMessage } from '../../Util/Helper'
 import OrdersActions from '../../Redux/OrdersRedux'
 import NavigationIcon from '../../Components/NavigationIcon'
 import Button from '../../Components/Button'
-import SearchItem from './SearchItem';
-import TradeItem from './TradeItem';
+import SearchItem from './SearchItem'
+import TradeItem from './TradeItem'
 
 class TradeScreen extends Component {
-
     state = {
         shares: '',
         limitPrice: '',
@@ -40,66 +34,70 @@ class TradeScreen extends Component {
         sideItems: [
             {
                 label: 'Buy',
-                value: 'buy',
+                value: 'buy'
             },
             {
                 label: 'Sell',
-                value: 'sell',
-            },
+                value: 'sell'
+            }
         ],
         typeItems: [
             {
                 label: 'Market',
-                value: 'market',
+                value: 'market'
             },
             {
                 label: 'Limit',
-                value: 'limit',
+                value: 'limit'
             },
             {
                 label: 'Stop',
-                value: 'stop',
+                value: 'stop'
             },
             {
                 label: 'Stop limit',
-                value: 'stop_limit',
-            },
+                value: 'stop_limit'
+            }
         ],
         timeInForceItems: [
             {
                 label: 'Day',
-                value: 'day',
+                value: 'day'
             },
             {
                 label: 'Gtc',
-                value: 'gtc',
+                value: 'gtc'
             },
             {
                 label: 'Opg',
-                value: 'opg',
-            },
+                value: 'opg'
+            }
         ]
     }
 
     componentDidMount() {
-        const submitted = this.props.route.params?.submitted;
+        const submitted = this.props.route.params?.submitted
         this.props.navigation.setOptions({
-            headerLeft: () => (
-                submitted ?
-                null :
-                (
+            headerLeft: () =>
+                submitted ? null : (
                     <NavigationIcon
                         onPress={() => this.props.navigation.pop()}
                         source={Images.back}
                     />
                 )
-            ),
         })
     }
 
     reviewOrder = (value) => {
-        const { shares, limitPrice, stopPrice, side, type, timeInForce } = this.state
-        const isExtenedHoursEnabled = type === 'limit' && timeInForce === 'day';
+        const {
+            shares,
+            limitPrice,
+            stopPrice,
+            side,
+            type,
+            timeInForce
+        } = this.state
+        const isExtenedHoursEnabled = type === 'limit' && timeInForce === 'day'
 
         let orderData = {
             symbol: value.symbol,
@@ -113,7 +111,7 @@ class TradeScreen extends Component {
         if (limitPrice) {
             orderData = {
                 ...orderData,
-                limit_price: limitPrice,
+                limit_price: limitPrice
             }
         }
         if (stopPrice) {
@@ -139,19 +137,26 @@ class TradeScreen extends Component {
 
     updateExtendedHours = () => {
         if (this.state.type === 'limit' && this.state.timeInForce === 'day') {
-            this.setState({ type: '', timeInForce: '' });
+            this.setState({ type: '', timeInForce: '' })
         } else {
-            this.setState({ type: 'limit', timeInForce: 'day' });
+            this.setState({ type: 'limit', timeInForce: 'day' })
         }
     }
 
     renderBody = (value) => {
         const { postingOrder } = this.props
         const {
-            type, side, timeInForce,
-            shares, limitPrice, stopPrice,
-            sideItems, typeItems, timeInForceItems,
-            stopPriceEditable, limitPriceEditable,
+            type,
+            side,
+            timeInForce,
+            shares,
+            limitPrice,
+            stopPrice,
+            sideItems,
+            typeItems,
+            timeInForceItems,
+            stopPriceEditable,
+            limitPriceEditable,
             submitted
         } = this.state
         let _stopPriceEditable = stopPriceEditable
@@ -171,7 +176,8 @@ class TradeScreen extends Component {
             _stopPriceEditable = true
             _limitPriceEditable = false
         } else if (type === 'stop_limit') {
-            disabledSubmitBtn = !side || !timeInForce || !shares || !stopPrice || !limitPrice
+            disabledSubmitBtn =
+                !side || !timeInForce || !shares || !stopPrice || !limitPrice
             _stopPriceEditable = true
             _limitPriceEditable = true
         }
@@ -181,7 +187,7 @@ class TradeScreen extends Component {
             color: submitted ? Colors.COLOR_GRAY : Colors.COLOR_GOLD
         }
 
-        const isExtenedHoursEnabled = type === 'limit' && timeInForce === 'day';
+        const isExtenedHoursEnabled = type === 'limit' && timeInForce === 'day'
 
         return (
             <View style={styles.container}>
@@ -192,73 +198,77 @@ class TradeScreen extends Component {
                     enableOnAndroid={false}
                 >
                     <TradeItem
-                        label='Side'
+                        label="Side"
                         items={sideItems}
                         disabled={submitted}
-                        onValueChange={value => this.setState({ side: value })}
+                        onValueChange={(value) =>
+                            this.setState({ side: value })
+                        }
                     />
                     <View style={styles.rowContainer}>
-                        <Text style={styles.label}>
-                            Shares
-                        </Text>
+                        <Text style={styles.label}>Shares</Text>
                         <TextInput
                             style={inputTxtStyle}
-                            onChangeText={(text) => this.setState({ shares: text })}
+                            onChangeText={(text) =>
+                                this.setState({ shares: text })
+                            }
                             value={shares}
-                            keyboardType='numeric'
+                            keyboardType="numeric"
                             autoCorrect={false}
-                            underlineColorAndroid='transparent'
+                            underlineColorAndroid="transparent"
                             editable={!submitted}
                             maxLength={20}
                         />
                     </View>
                     <TradeItem
-                        label='Type'
+                        label="Type"
                         items={typeItems}
                         selectedItem={type}
                         disabled={submitted}
-                        onValueChange={value => this.onTypeChanged(value)}
+                        onValueChange={(value) => this.onTypeChanged(value)}
                     />
                     <TradeItem
-                        label='Time in Force'
+                        label="Time in Force"
                         items={timeInForceItems}
                         selectedItem={timeInForce}
                         disabled={submitted}
-                        onValueChange={value => this.setState({ timeInForce: value })}
+                        onValueChange={(value) =>
+                            this.setState({ timeInForce: value })
+                        }
                     />
                     <View style={styles.rowContainer}>
-                        <Text style={styles.label}>
-                            Limit Price
-                        </Text>
+                        <Text style={styles.label}>Limit Price</Text>
                         <TextInput
                             style={inputTxtStyle}
-                            onChangeText={(text) => this.setState({ limitPrice: text })}
+                            onChangeText={(text) =>
+                                this.setState({ limitPrice: text })
+                            }
                             value={limitPrice}
-                            keyboardType='numeric'
+                            keyboardType="numeric"
                             autoCorrect={false}
-                            underlineColorAndroid='transparent'
+                            underlineColorAndroid="transparent"
                             editable={_limitPriceEditable}
                             maxLength={20}
                         />
                     </View>
                     <View style={styles.rowContainer}>
-                        <Text style={styles.label}>
-                            Stop Price
-                        </Text>
+                        <Text style={styles.label}>Stop Price</Text>
                         <TextInput
                             style={inputTxtStyle}
-                            onChangeText={(text) => this.setState({ stopPrice: text })}
+                            onChangeText={(text) =>
+                                this.setState({ stopPrice: text })
+                            }
                             value={stopPrice}
-                            keyboardType='numeric'
+                            keyboardType="numeric"
                             autoCorrect={false}
-                            underlineColorAndroid='transparent'
+                            underlineColorAndroid="transparent"
                             editable={_stopPriceEditable}
                             maxLength={20}
                         />
                     </View>
                     <CheckBox
                         style={{ marginTop: 10 }}
-                        rightText={"Extended Hours"}
+                        rightText={'Extended Hours'}
                         rightTextStyle={styles.label}
                         isChecked={isExtenedHoursEnabled}
                         checkBoxColor={Colors.COLOR_GOLD}
@@ -286,10 +296,7 @@ class TradeScreen extends Component {
         return (
             <TouchableWithoutFeedback onPress={() => dismissKeyboard()}>
                 <View style={styles.mainContainer}>
-                    <SearchItem
-                        item={value}
-                        isLargeStyle
-                    />
+                    <SearchItem item={value} isLargeStyle />
                     {this.renderBody(value)}
                 </View>
             </TouchableWithoutFeedback>
@@ -321,7 +328,7 @@ const styles = {
         position: 'absolute',
         bottom: 0,
         left: 0,
-        right: 0,
+        right: 0
     },
     value: {
         ...Fonts.style.h3,
@@ -341,7 +348,7 @@ const styles = {
         borderBottomColor: Colors.COLOR_GOLD,
         borderBottomWidth: 1,
         color: Colors.COLOR_GOLD
-    },
+    }
 }
 
 const mapStateToProps = (state) => {
@@ -355,7 +362,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-})
+const mapDispatchToProps = (dispatch) => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(TradeScreen)

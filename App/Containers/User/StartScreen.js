@@ -10,22 +10,17 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import RNPickerSelect from 'react-native-picker-select'
-import { CustomTabs } from 'react-native-custom-tabs';
+import { CustomTabs } from 'react-native-custom-tabs'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import AppActions from '../../Redux/AppRedux'
-import {
-    ApplicationStyles,
-    Colors,
-    Images
-} from '../../Themes'
+import { ApplicationStyles, Colors, Images } from '../../Themes'
 import { size } from '../../Util/Helper'
 import Button from '../../Components/Button'
-import config from '../../config';
-import Loading from '../../Components/Loading';
+import config from '../../config'
+import Loading from '../../Components/Loading'
 
 class StartScreen extends Component {
-
     constructor(props) {
         super(props)
 
@@ -42,60 +37,71 @@ class StartScreen extends Component {
             baseUrlItems: [
                 {
                     label: 'Live Account',
-                    value: 'https://api.alpaca.markets/',
+                    value: 'https://api.alpaca.markets/'
                 },
                 {
                     label: 'Paper Account',
-                    value: config.BASE_URL,
-                },
+                    value: config.BASE_URL
+                }
             ],
-            accessToken: null,
+            accessToken: null
         }
     }
 
     async componentDidMount() {
-        const operation = this.props.route.params?.operation;
-        if (Platform.OS === 'android' && operation !== "logout") {
-            Linking.getInitialURL().then(url => {
-              this.exchangeToken(url);
-            });
+        const operation = this.props.route.params?.operation
+        if (Platform.OS === 'android' && operation !== 'logout') {
+            Linking.getInitialURL().then((url) => {
+                this.exchangeToken(url)
+            })
         }
-        const accessToken = await AsyncStorage.getItem('accessToken');
-        const baseUrl = await AsyncStorage.getItem('baseUrl');
+        const accessToken = await AsyncStorage.getItem('accessToken')
+        const baseUrl = await AsyncStorage.getItem('baseUrl')
         if (accessToken) {
             const data = {
                 baseUrl,
-                accessToken,
-            };
-            this.props.appStartAttempt(data);
-            this.props.navigation.navigate('Tab');
+                accessToken
+            }
+            this.props.appStartAttempt(data)
+            this.props.navigation.navigate('Tab')
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.fetching && !nextProps.fetching && nextProps.accessToken) {
-            this.setState({ accessToken: nextProps.accessToken });
+        if (
+            this.props.fetching &&
+            !nextProps.fetching &&
+            nextProps.accessToken
+        ) {
+            this.setState({ accessToken: nextProps.accessToken })
         }
     }
 
     exchangeToken = (url) => {
-        console.log("url:", url);
-        if (!url) return;
-        const { redirectUrl, grantType } = this.state;
-        const code = this.getCode(url);
-        const config = `grant_type=${grantType}&redirect_uri=${redirectUrl}&code=${code}`;
+        console.log('url:', url)
+        if (!url) return
+        const { redirectUrl, grantType } = this.state
+        const code = this.getCode(url)
+        const config = `grant_type=${grantType}&redirect_uri=${redirectUrl}&code=${code}`
 
-        this.props.alpacaExchangeToken(config);
+        this.props.alpacaExchangeToken(config)
     }
 
     getCode = (url) => {
-        let codeIndex = url.indexOf('code');
-        let code = url.slice(codeIndex + 5);
+        let codeIndex = url.indexOf('code')
+        let code = url.slice(codeIndex + 5)
         return code
     }
 
     authStart = async () => {
-        const { clientId, clientSecret, authorizationEndpoint, redirectUrl, responseType, tokenEndpoint } = this.state;
+        const {
+            clientId,
+            clientSecret,
+            authorizationEndpoint,
+            redirectUrl,
+            responseType,
+            tokenEndpoint
+        } = this.state
         // const authConfig = {
         //     issuer: authorizationEndpoint,
         //     clientId,
@@ -119,78 +125,80 @@ class StartScreen extends Component {
         // } catch (error) {
         //     console.log('auth error', error);
         // }
-        let webOAuthUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=${responseType}`;
-        if (Platform.OS === "android") {
+        let webOAuthUrl = `${authorizationEndpoint}?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=${responseType}`
+        if (Platform.OS === 'android') {
             CustomTabs.openURL(webOAuthUrl, {
                 forceCloseOnRedirection: true
-            }).then((launched) => {
-                console.log(`Launched custom tabs: ${launched}`);
-            }).catch(err => {
-                console.error("custom tab error:" + err);
-            });
+            })
+                .then((launched) => {
+                    console.log(`Launched custom tabs: ${launched}`)
+                })
+                .catch((err) => {
+                    console.error('custom tab error:' + err)
+                })
         } else {
             NativeModules.AlpacaOAuth.AuthStart(webOAuthUrl)
-            .then(url => {
-                console.log('auth result', url);
-                if (url) {
-                    this.exchangeToken(url);
-                }
-            })
-            .catch((error) => {
-                console.log('native auth error:', error);
-            });
+                .then((url) => {
+                    console.log('auth result', url)
+                    if (url) {
+                        this.exchangeToken(url)
+                    }
+                })
+                .catch((error) => {
+                    console.log('native auth error:', error)
+                })
         }
     }
 
     getStarted = () => {
-        const { baseUrl } = this.state;
+        const { baseUrl } = this.state
         const data = {
-            baseUrl,
-        };
-        AsyncStorage.setItem('baseUrl', baseUrl);
-        this.props.appStartAttempt(data);
-        this.props.navigation.navigate('Tab');
+            baseUrl
+        }
+        AsyncStorage.setItem('baseUrl', baseUrl)
+        this.props.appStartAttempt(data)
+        this.props.navigation.navigate('Tab')
     }
 
     render() {
         const { baseUrl, baseUrlItems, accessToken } = this.state
         return (
             <View style={styles.mainContainer}>
-                {
-                    accessToken ?
-                        <View style={styles.rowContainer}>
-                            <Text style={styles.label}>
-                                Account
-                            </Text>
-                            <RNPickerSelect
-                                placeholder={{
-                                    label: '',
-                                    value: null,
-                                    color: Colors.COLOR_GOLD,
-                                }}
-                                items={baseUrlItems}
-                                onValueChange={(value) => {
-                                    this.setState({
-                                        baseUrl: value,
-                                    })
-                                }}
-                                style={pickerSelectStyles}
-                                useNativeAndroidPickerStyle={false}
-                                value={baseUrl}
-                                ref={(el) => {
-                                    this.inputRefs.picker = el
-                                }}
-                            />
-                        </View> :
-                        <Image
-                            style={styles.logo}
-                            source={Images.logo}
-                            resizeMode="contain"
+                {accessToken ? (
+                    <View style={styles.rowContainer}>
+                        <Text style={styles.label}>Account</Text>
+                        <RNPickerSelect
+                            placeholder={{
+                                label: '',
+                                value: null,
+                                color: Colors.COLOR_GOLD
+                            }}
+                            items={baseUrlItems}
+                            onValueChange={(value) => {
+                                this.setState({
+                                    baseUrl: value
+                                })
+                            }}
+                            style={pickerSelectStyles}
+                            useNativeAndroidPickerStyle={false}
+                            value={baseUrl}
+                            ref={(el) => {
+                                this.inputRefs.picker = el
+                            }}
                         />
-                }
+                    </View>
+                ) : (
+                    <Image
+                        style={styles.logo}
+                        source={Images.logo}
+                        resizeMode="contain"
+                    />
+                )}
                 <Button
                     style={styles.button}
-                    label={accessToken ? "Get Started" : "Authenticate with Alpaca"}
+                    label={
+                        accessToken ? 'Get Started' : 'Authenticate with Alpaca'
+                    }
                     color={Colors.COLOR_NAV_HEADER}
                     labelColor={Colors.WHITE}
                     height={50}
@@ -209,13 +217,13 @@ const styles = {
         marginTop: size(150)
     },
     button: {
-        marginTop: size(100),
+        marginTop: size(100)
     },
     logo: {
-        alignSelf: "center",
+        alignSelf: 'center',
         marginTop: size(100),
         width: size(200),
-        height: size(200),
+        height: size(200)
     }
 }
 
@@ -228,7 +236,7 @@ const pickerSelectStyles = StyleSheet.create({
         borderBottomColor: Colors.COLOR_GOLD,
         borderBottomWidth: 1,
         backgroundColor: 'white',
-        color: Colors.COLOR_GOLD,
+        color: Colors.COLOR_GOLD
     },
     inputAndroid: {
         fontSize: size(16),
@@ -237,8 +245,8 @@ const pickerSelectStyles = StyleSheet.create({
         borderBottomColor: Colors.COLOR_GOLD,
         borderBottomWidth: 1,
         backgroundColor: 'white',
-        color: Colors.COLOR_GOLD,
-    },
+        color: Colors.COLOR_GOLD
+    }
 })
 
 const mapStateToProps = (state) => ({
@@ -246,9 +254,10 @@ const mapStateToProps = (state) => ({
     accessToken: state.app.accessToken
 })
 
-const mapDispatchToProps = dispatch => ({
-    appStartAttempt: data => dispatch(AppActions.appStartAttempt(data)),
-    alpacaExchangeToken: data => dispatch(AppActions.exchangeTokenAttempt(data)),
+const mapDispatchToProps = (dispatch) => ({
+    appStartAttempt: (data) => dispatch(AppActions.appStartAttempt(data)),
+    alpacaExchangeToken: (data) =>
+        dispatch(AppActions.exchangeTokenAttempt(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartScreen)

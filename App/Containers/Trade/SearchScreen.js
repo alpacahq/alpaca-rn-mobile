@@ -1,18 +1,10 @@
 import React, { Component } from 'react'
-import {
-    View,
-    TextInput,
-    FlatList
-} from 'react-native'
+import { View, TextInput, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
 import AssetsActions from '../../Redux/AssetsRedux'
-import {
-    ApplicationStyles,
-    Images,
-    Colors,
-} from '../../Themes'
+import { ApplicationStyles, Images, Colors } from '../../Themes'
 import {
     getTodayStart,
     getTodayEnd,
@@ -25,7 +17,6 @@ import NavigationIcon from '../../Components/NavigationIcon'
 import Loading from '../../Components/Loading'
 
 class SearchScreen extends Component {
-
     state = {
         query: '',
         totalItems: [],
@@ -39,7 +30,7 @@ class SearchScreen extends Component {
                     onPress={() => this.props.navigation.pop()}
                     source={Images.back}
                 />
-            ),
+            )
         })
     }
 
@@ -58,7 +49,11 @@ class SearchScreen extends Component {
         const { query } = this.state
 
         let filteredItems = _.map(assets, function (el) {
-            if (query && el.symbol.toLowerCase().startsWith(query.toLowerCase())) return el
+            if (
+                query &&
+                el.symbol.toLowerCase().startsWith(query.toLowerCase())
+            )
+                return el
         })
         filteredItems = _.without(filteredItems, undefined)
         if (filteredItems.length > 199) {
@@ -76,7 +71,13 @@ class SearchScreen extends Component {
             symbols = symbols + div + item.symbol
         })
         getBars('1Min', symbols, getTodayStart(), getTodayEnd(), 'today')
-        getBars('1D', symbols, getYesterdayStart(), getYesterdayEnd(), 'yesterday')
+        getBars(
+            '1D',
+            symbols,
+            getYesterdayStart(),
+            getYesterdayEnd(),
+            'yesterday'
+        )
     }
 
     render() {
@@ -86,12 +87,12 @@ class SearchScreen extends Component {
             <View style={styles.mainContainer}>
                 <View style={styles.searchContainer}>
                     <TextInput
-                        ref={ref => this.queryTextInput = ref}
+                        ref={(ref) => (this.queryTextInput = ref)}
                         style={styles.searchInput}
-                        placeholder='Symbol...'
+                        placeholder="Symbol..."
                         autoFocus
                         autoCorrect={false}
-                        onChangeText={text => {
+                        onChangeText={(text) => {
                             this.setState({ query: text })
                             this.onSearchBarTextChange()
                         }}
@@ -100,14 +101,17 @@ class SearchScreen extends Component {
                     />
                     <NavigationIcon
                         style={styles.navSearchIcon}
-                        iconStyle={{ tintColor: Colors.COLOR_NAV_HEADER, marginRight: 0 }}
+                        iconStyle={{
+                            tintColor: Colors.COLOR_NAV_HEADER,
+                            marginRight: 0
+                        }}
                         source={Images.search}
                     />
                 </View>
                 <FlatList
                     style={styles.list}
                     data={filteredItems}
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item) => item.id}
                     renderItem={({ item }) => {
                         return (
                             <SearchItem
@@ -130,13 +134,13 @@ class SearchScreen extends Component {
 const styles = {
     ...ApplicationStyles.screen,
     searchContainer: {
-        flexDirection: 'row',
+        flexDirection: 'row'
     },
     searchInput: {
         flex: 1,
         height: size(40),
         borderBottomColor: 'rgba(0, 0, 0, 0.5)',
-        borderBottomWidth: 1,
+        borderBottomWidth: 1
     },
     navSearchIcon: {
         position: 'absolute',
@@ -158,7 +162,10 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    getBars: (timeframe, symbols, start, end, day) => dispatch(AssetsActions.getBarsAttempt(timeframe, symbols, start, end, day)),
+    getBars: (timeframe, symbols, start, end, day) =>
+        dispatch(
+            AssetsActions.getBarsAttempt(timeframe, symbols, start, end, day)
+        )
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchScreen)

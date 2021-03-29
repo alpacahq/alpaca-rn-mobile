@@ -25,7 +25,10 @@ const Tab = createBottomTabNavigator()
 function OverviewStack() {
     return (
         <Stack.Navigator
-            screenOptions={{ headerStyle : { backgroundColor: Colors.COLOR_NAV_HEADER }, headerTitle: null }}
+            screenOptions={{
+                headerStyle: { backgroundColor: Colors.COLOR_NAV_HEADER },
+                headerTitle: null
+            }}
         >
             <Stack.Screen name="Overview" component={OverviewScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
@@ -40,7 +43,10 @@ function OverviewStack() {
 function PositionsStack() {
     return (
         <Stack.Navigator
-            screenOptions={{ headerStyle : { backgroundColor: Colors.COLOR_NAV_HEADER }, headerTitle: null }}
+            screenOptions={{
+                headerStyle: { backgroundColor: Colors.COLOR_NAV_HEADER },
+                headerTitle: null
+            }}
         >
             <Stack.Screen name="Positions" component={PositionScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
@@ -55,7 +61,10 @@ function PositionsStack() {
 function OrdersStack() {
     return (
         <Stack.Navigator
-            screenOptions={{ headerStyle : { backgroundColor: Colors.COLOR_NAV_HEADER }, headerTitle: null }}
+            screenOptions={{
+                headerStyle: { backgroundColor: Colors.COLOR_NAV_HEADER },
+                headerTitle: null
+            }}
         >
             <Stack.Screen name="Orders" component={OrdersScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
@@ -70,7 +79,10 @@ function OrdersStack() {
 function EmergencyStack() {
     return (
         <Stack.Navigator
-            screenOptions={{ headerStyle : { backgroundColor: Colors.COLOR_NAV_HEADER }, headerTitle: null }}
+            screenOptions={{
+                headerStyle: { backgroundColor: Colors.COLOR_NAV_HEADER },
+                headerTitle: null
+            }}
         >
             <Stack.Screen name="Emergency" component={EmergencyScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
@@ -93,8 +105,8 @@ function TabStack() {
                 activeTintColor: Colors.COLOR_GOLD,
                 showLabel: false,
                 style: {
-                    backgroundColor: 'rgb(250, 250, 250)',
-                },
+                    backgroundColor: 'rgb(250, 250, 250)'
+                }
             }}
         >
             <Tab.Screen
@@ -102,7 +114,10 @@ function TabStack() {
                 component={OverviewStack}
                 options={{
                     tabBarIcon: ({ focused }) => (
-                        <TabImage source={Images.overview} isSelected={focused} />
+                        <TabImage
+                            source={Images.overview}
+                            isSelected={focused}
+                        />
                     )
                 }}
             />
@@ -111,7 +126,10 @@ function TabStack() {
                 component={PositionsStack}
                 options={{
                     tabBarIcon: ({ focused }) => (
-                        <TabImage source={Images.positions} isSelected={focused} />
+                        <TabImage
+                            source={Images.positions}
+                            isSelected={focused}
+                        />
                     )
                 }}
             />
@@ -129,7 +147,11 @@ function TabStack() {
                 component={EmergencyStack}
                 options={{
                     tabBarIcon: ({ focused }) => (
-                        <TabImage style={{ width: 48, height: 48 }} source={Images.emergency} isSelected={focused} />
+                        <TabImage
+                            style={{ width: 48, height: 48 }}
+                            source={Images.emergency}
+                            isSelected={focused}
+                        />
                     )
                 }}
             />
@@ -149,4 +171,4 @@ function AppNavigator() {
     )
 }
 
-export default AppNavigator;
+export default AppNavigator

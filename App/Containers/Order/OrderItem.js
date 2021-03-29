@@ -1,28 +1,22 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    TouchableOpacity
-} from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 
-import {
-    ApplicationStyles,
-    Colors,
-    Fonts
-} from '../../Themes'
-import {
-    capitalize,
-    changeTimeFormat,
-    size
-} from '../../Util/Helper'
+import { ApplicationStyles, Colors, Fonts } from '../../Themes'
+import { capitalize, changeTimeFormat, size } from '../../Util/Helper'
 
 class OrderItem extends Component {
-
     render() {
         const { order, onPress } = this.props
-        const mainValue = `${order.qty} (${order.filled_qty} filled) | ${capitalize(order.type)} ${capitalize(order.side)} ${capitalize(order.time_in_force)}`
-        const timeValue = capitalize(order.status) + ': ' + changeTimeFormat(order.submitted_at)
+        const mainValue = `${order.qty} (${
+            order.filled_qty
+        } filled) | ${capitalize(order.type)} ${capitalize(
+            order.side
+        )} ${capitalize(order.time_in_force)}`
+        const timeValue =
+            capitalize(order.status) +
+            ': ' +
+            changeTimeFormat(order.submitted_at)
 
         return (
             <TouchableOpacity
@@ -31,20 +25,24 @@ class OrderItem extends Component {
                 onPress={onPress}
             >
                 <View style={styles.rowContainer}>
-                    <Text style={[styles.actionLabel, { backgroundColor: order.tag === 'open' ? Colors.COLOR_LIGHT_YELLOW : Colors.COLOR_GRAY }]}>
+                    <Text
+                        style={[
+                            styles.actionLabel,
+                            {
+                                backgroundColor:
+                                    order.tag === 'open'
+                                        ? Colors.COLOR_LIGHT_YELLOW
+                                        : Colors.COLOR_GRAY
+                            }
+                        ]}
+                    >
                         {order.tag}
                     </Text>
-                    <Text style={styles.h3}>
-                        {timeValue}
-                    </Text>
+                    <Text style={styles.h3}>{timeValue}</Text>
                 </View>
                 <View style={styles.rowContainer}>
-                    <Text style={styles.h2}>
-                        {order.symbol}
-                    </Text>
-                    <Text style={styles.h3}>
-                        {mainValue}
-                    </Text>
+                    <Text style={styles.h2}>{order.symbol}</Text>
+                    <Text style={styles.h3}>{mainValue}</Text>
                 </View>
                 <View style={styles.separator} />
             </TouchableOpacity>
@@ -53,7 +51,7 @@ class OrderItem extends Component {
 }
 
 OrderItem.propTypes = {
-    order: PropTypes.object.isRequired,
+    order: PropTypes.object.isRequired
 }
 
 const styles = {
@@ -74,7 +72,7 @@ const styles = {
         paddingLeft: size(5),
         paddingRight: size(5),
         borderRadius: size(7),
-        overflow: 'hidden',
+        overflow: 'hidden'
     },
     rowContainer: {
         flexDirection: 'row',

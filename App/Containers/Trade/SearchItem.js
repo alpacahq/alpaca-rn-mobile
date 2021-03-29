@@ -1,40 +1,36 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    ViewPropTypes
-} from 'react-native'
+import { View, Text, TouchableOpacity, ViewPropTypes } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import AssetsActions from '../../Redux/AssetsRedux'
-import {
-    ApplicationStyles,
-    Colors,
-    Fonts
-} from '../../Themes'
+import { ApplicationStyles, Colors, Fonts } from '../../Themes'
 import { convert, formatValue, size } from '../../Util/Helper'
 
 class SearchItem extends Component {
-
     render() {
         const { item, isLargeStyle, style, onPress, assets } = this.props
-        let currentStockPrice = 0, preClosePrice = 0
-        let priceDif = 0, percentage = 0
+        let currentStockPrice = 0,
+            preClosePrice = 0
+        let priceDif = 0,
+            percentage = 0
         let plStyle = styles.upText
         const symbolStyle = isLargeStyle ? styles.h1 : styles.h2
         const stockPriceStyle = isLargeStyle ? styles.h2 : styles.h3
 
         try {
             if (assets) {
-                assets.map(assetItem => {
+                assets.map((assetItem) => {
                     if (assetItem.symbol === item.symbol) {
                         currentStockPrice = assetItem.todayBar.o
                         preClosePrice = assetItem.preBar.c
                         priceDif = currentStockPrice - preClosePrice
-                        percentage = convert((priceDif / preClosePrice * 100).toFixed(2), true)
-                        plStyle = priceDif >= 0 ? styles.upText : styles.downText
+                        percentage = convert(
+                            ((priceDif / preClosePrice) * 100).toFixed(2),
+                            true
+                        )
+                        plStyle =
+                            priceDif >= 0 ? styles.upText : styles.downText
                     }
                 })
             }
@@ -47,9 +43,7 @@ class SearchItem extends Component {
                 >
                     <View style={styles.rowContainer}>
                         <View style={{ alignSelf: 'center' }}>
-                            <Text style={symbolStyle}>
-                                {item.symbol}
-                            </Text>
+                            <Text style={symbolStyle}>{item.symbol}</Text>
                         </View>
                         <View style={styles.valueContainer}>
                             <Text style={stockPriceStyle}>
@@ -74,7 +68,7 @@ SearchItem.propTypes = {
     item: PropTypes.object.isRequired,
     symbolStyle: PropTypes.object,
     onPress: PropTypes.func,
-    isLargeStyle: PropTypes.bool,
+    isLargeStyle: PropTypes.bool
 }
 
 const styles = {
@@ -93,16 +87,16 @@ const styles = {
     },
     upText: {
         ...Fonts.style.h3,
-        color: Colors.COLOR_GREEN,
+        color: Colors.COLOR_GREEN
     },
     downText: {
         ...Fonts.style.h3,
-        color: Colors.COLOR_DARK_RED,
+        color: Colors.COLOR_DARK_RED
     },
     rowContainer: {
         flexDirection: 'row',
         height: size(50),
-        marginBottom: 10,
+        marginBottom: 10
     },
     valueContainer: {
         position: 'absolute',
@@ -118,7 +112,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getBars: (timeframe, symbols, day) => dispatch(AssetsActions.getBarsAttempt(timeframe, symbols, day)),
+        getBars: (timeframe, symbols, day) =>
+            dispatch(AssetsActions.getBarsAttempt(timeframe, symbols, day))
     }
 }
 

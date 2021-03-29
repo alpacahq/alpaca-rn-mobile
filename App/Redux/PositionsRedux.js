@@ -20,15 +20,28 @@ export const INITIAL_STATE = Immutable({
 
 export const getPositionsAttempt = (state, action) => {
     const { showLoading } = action
-    return state.merge({ fetching: showLoading, error: false, errorMessage: '' })
+    return state.merge({
+        fetching: showLoading,
+        error: false,
+        errorMessage: ''
+    })
 }
 
 export const getPositionsSuccess = (state, action) => {
-    return state.merge({ fetching: false, error: false, errorMessage: '', positions: action.data })
+    return state.merge({
+        fetching: false,
+        error: false,
+        errorMessage: '',
+        positions: action.data
+    })
 }
 
 export const getPositionsFailure = (state, action) => {
-    return state.merge({ fetching: false, error: true, errorMessage: action.error })
+    return state.merge({
+        fetching: false,
+        error: true,
+        errorMessage: action.error
+    })
 }
 
 export const reducer = createReducer(INITIAL_STATE, {

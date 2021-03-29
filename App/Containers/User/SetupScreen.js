@@ -1,27 +1,16 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    TextInput,
-    StyleSheet,
-    Linking
-} from 'react-native'
+import { View, Text, TextInput, StyleSheet, Linking } from 'react-native'
 import { connect } from 'react-redux'
 import RNPickerSelect from 'react-native-picker-select'
 import CheckBox from 'react-native-check-box'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import AppActions from '../../Redux/AppRedux'
-import {
-    ApplicationStyles,
-    Colors,
-    Fonts
-} from '../../Themes'
+import { ApplicationStyles, Colors, Fonts } from '../../Themes'
 import { size } from '../../Util/Helper'
 import Button from '../../Components/Button'
 
 class SetupScreen extends Component {
-
     constructor(props) {
         super(props)
 
@@ -34,13 +23,13 @@ class SetupScreen extends Component {
             baseUrlItems: [
                 {
                     label: 'https://api.alpaca.markets/',
-                    value: 'https://api.alpaca.markets/',
+                    value: 'https://api.alpaca.markets/'
                 },
                 {
                     label: 'https://paper-api.alpaca.markets/',
-                    value: 'https://paper-api.alpaca.markets/',
-                },
-            ],
+                    value: 'https://paper-api.alpaca.markets/'
+                }
+            ]
         }
     }
 
@@ -48,7 +37,7 @@ class SetupScreen extends Component {
         let apiKey = ''
         let secretKey = ''
         let baseUrl = ''
-        let saveApiKey = false;
+        let saveApiKey = false
         try {
             apiKey = await AsyncStorage.getItem('apiKey')
             secretKey = await AsyncStorage.getItem('secretKey')
@@ -58,10 +47,10 @@ class SetupScreen extends Component {
                 apiKey,
                 secretKey,
                 baseUrl,
-                saveApiKey: saveApiKey === "1"
+                saveApiKey: saveApiKey === '1'
             })
         } catch (error) {
-            console.log(error.message);
+            console.log(error.message)
         }
     }
 
@@ -75,7 +64,7 @@ class SetupScreen extends Component {
         var data = {
             apiKey,
             secretKey,
-            baseUrl,
+            baseUrl
         }
 
         if (saveApiKey) {
@@ -86,7 +75,7 @@ class SetupScreen extends Component {
             AsyncStorage.removeItem('secretKey')
         }
         AsyncStorage.setItem('baseUrl', baseUrl)
-        AsyncStorage.setItem('saveApiKey', saveApiKey ? "1" : "0")
+        AsyncStorage.setItem('saveApiKey', saveApiKey ? '1' : '0')
 
         this.props.appStartAttempt(data)
         this.props.navigation.navigate('Tab')
@@ -94,60 +83,62 @@ class SetupScreen extends Component {
 
     openURL = () => {
         const signUpUrl = 'https://app.alpaca.markets/signup'
-        Linking.canOpenURL(signUpUrl).then(supported => {
+        Linking.canOpenURL(signUpUrl).then((supported) => {
             if (supported) {
-                Linking.openURL(signUpUrl);
+                Linking.openURL(signUpUrl)
             } else {
-                console.log("Don't know how to open URI: " + signUpUrl);
+                console.log("Don't know how to open URI: " + signUpUrl)
             }
         })
     }
 
     render() {
-        const { apiKey, secretKey, baseUrl, baseUrlItems, saveApiKey } = this.state
+        const {
+            apiKey,
+            secretKey,
+            baseUrl,
+            baseUrlItems,
+            saveApiKey
+        } = this.state
 
         return (
             <View style={styles.mainContainer}>
                 <View style={styles.rowContainer}>
-                    <Text style={styles.label}>
-                        APCA_API_KEY_ID
-                    </Text>
+                    <Text style={styles.label}>APCA_API_KEY_ID</Text>
                     <TextInput
                         style={styles.inputText}
                         onChangeText={(text) => this.setState({ apiKey: text })}
                         value={apiKey}
                         autoCorrect={false}
-                        underlineColorAndroid='transparent'
+                        underlineColorAndroid="transparent"
                         maxLength={100}
                     />
                 </View>
                 <View style={styles.rowContainer}>
-                    <Text style={styles.label}>
-                        APCA_API_SECRET_KEY
-                    </Text>
+                    <Text style={styles.label}>APCA_API_SECRET_KEY</Text>
                     <TextInput
                         style={styles.inputText}
-                        onChangeText={(text) => this.setState({ secretKey: text })}
+                        onChangeText={(text) =>
+                            this.setState({ secretKey: text })
+                        }
                         value={secretKey}
                         autoCorrect={false}
-                        underlineColorAndroid='transparent'
+                        underlineColorAndroid="transparent"
                         maxLength={100}
                     />
                 </View>
                 <View style={styles.rowContainer}>
-                    <Text style={styles.label}>
-                        BASE_URL
-                    </Text>
+                    <Text style={styles.label}>BASE_URL</Text>
                     <RNPickerSelect
                         placeholder={{
                             label: '',
                             value: null,
-                            color: Colors.COLOR_GOLD,
+                            color: Colors.COLOR_GOLD
                         }}
                         items={baseUrlItems}
                         onValueChange={(value) => {
                             this.setState({
-                                baseUrl: value,
+                                baseUrl: value
                             })
                         }}
                         style={pickerSelectStyles}
@@ -160,7 +151,7 @@ class SetupScreen extends Component {
                 </View>
                 <CheckBox
                     style={{ marginTop: 15 }}
-                    rightText={"Save API Key"}
+                    rightText={'Save API Key'}
                     rightTextStyle={styles.label}
                     isChecked={saveApiKey}
                     checkBoxColor={Colors.COLOR_GOLD}
@@ -176,11 +167,16 @@ class SetupScreen extends Component {
                     onPress={this.getStarted}
                 />
                 <Text style={[styles.label, { marginTop: size(50) }]}>
-                    Please sign up first on the Alpaca website{" "}
-                    <Text style={styles.linkText} onPress={() => this.props.navigation.navigate('Register')}>
+                    Please sign up first on the Alpaca website{' '}
+                    <Text
+                        style={styles.linkText}
+                        onPress={() =>
+                            this.props.navigation.navigate('Register')
+                        }
+                    >
                         (https://app.alpaca.markets/signup)
-                    </Text>
-                    {" "}and generate your API Key to use this app.
+                    </Text>{' '}
+                    and generate your API Key to use this app.
                 </Text>
             </View>
         )
@@ -201,11 +197,11 @@ const styles = {
         color: Colors.COLOR_GOLD
     },
     button: {
-        marginTop: size(50),
+        marginTop: size(50)
     },
     linkText: {
         ...Fonts.style.h3,
-        textDecorationLine: 'underline',
+        textDecorationLine: 'underline'
     }
 }
 
@@ -218,7 +214,7 @@ const pickerSelectStyles = StyleSheet.create({
         borderBottomColor: Colors.COLOR_GOLD,
         borderBottomWidth: 1,
         backgroundColor: 'white',
-        color: Colors.COLOR_GOLD,
+        color: Colors.COLOR_GOLD
     },
     inputAndroid: {
         fontSize: size(16),
@@ -227,15 +223,14 @@ const pickerSelectStyles = StyleSheet.create({
         borderBottomColor: Colors.COLOR_GOLD,
         borderBottomWidth: 1,
         backgroundColor: 'white',
-        color: Colors.COLOR_GOLD,
-    },
+        color: Colors.COLOR_GOLD
+    }
 })
 
-const mapStateToProps = (state) => ({
-})
+const mapStateToProps = (state) => ({})
 
-const mapDispatchToProps = dispatch => ({
-    appStartAttempt: data => dispatch(AppActions.appStartAttempt(data)),
+const mapDispatchToProps = (dispatch) => ({
+    appStartAttempt: (data) => dispatch(AppActions.appStartAttempt(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupScreen)

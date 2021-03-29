@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { Provider } from 'react-redux'
-import { NavigationContainer } from '@react-navigation/native';
-import FlashMessage from "react-native-flash-message";
+import { NavigationContainer } from '@react-navigation/native'
+import FlashMessage from 'react-native-flash-message'
 
 import AppNavigator from './AppNavigator'
 import createStore from '../Redux'
