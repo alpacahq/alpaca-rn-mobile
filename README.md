@@ -1,4 +1,5 @@
 # Alpaca React Native Mobile App
+
 Alpaca is a modern platform for algorithmic trading.
 
 This is an example React native mobile app to help you get started with Alpaca.
@@ -7,15 +8,15 @@ You can find apps on [App store](https://itunes.apple.com/us/app/alpaca-dashboar
 
 ## Main technologies used
 
-- [React Native](https://github.com/facebook/react-native)
+-   [React Native](https://github.com/facebook/react-native)
 
 > A framework for building native apps with React.
 
-- [Redux](http://redux.js.org/)
+-   [Redux](http://redux.js.org/)
 
 > Redux is a predictable state container for JavaScript apps.
 
-- [Redux-Saga](https://github.com/redux-saga/redux-saga)
+-   [Redux-Saga](https://github.com/redux-saga/redux-saga)
 
 > Redux-Saga is a library that aims to make application side effects easier to manage, more efficient to execute, easy to test, and better at handling failures.
 
@@ -30,37 +31,42 @@ You can find apps on [App store](https://itunes.apple.com/us/app/alpaca-dashboar
 
 ## Running the project
 
-- Clone this project
+-   Clone this project
+
 ```
 git clone https://github.com/alpacahq/alpaca-rn-mobile.git
 ```
 
-- Install dependencies
+-   Install dependencies
+
 ```
-npm install
+yarn
 ```
 
-- Run packager
+-   Run packager
+
 ```
-npm start
+yarn start
 ```
 
-- Run iOS
+-   Run iOS
+
 ```
-react-native run-ios
+yarn ios
 ```
 
-- Run Android
+-   Run Android
+
 ```
-react-native run-android
+yarn android
 ```
 
-- Get client id and secret
+-   Get client id and secret
 
 You will need to specify client id and secret in `App/config.js` to get the app working.
 
 Go to [OAuth Apps](https://app.alpaca.markets/brokerage/apps/manage) and get client id/secret by creating new app.
- (The redirect uri should be `alpacamobile://oauth`)
+(The redirect uri should be `alpacamobile://oauth`)
 
 ### Disclosures
 
