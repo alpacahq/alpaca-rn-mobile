@@ -31,11 +31,20 @@ export const getAssetsAttempt = (state, action) => {
 }
 
 export const getAssetsSuccess = (state, action) => {
-    return state.merge({ fetching: false, error: false, errorMessage: '', assets: action.data })
+    return state.merge({
+        fetching: false,
+        error: false,
+        errorMessage: '',
+        assets: action.data
+    })
 }
 
 export const getAssetsFailure = (state, action) => {
-    return state.merge({ fetching: false, error: true, errorMessage: action.error })
+    return state.merge({
+        fetching: false,
+        error: true,
+        errorMessage: action.error
+    })
 }
 
 export const getBarsAttempt = (state, action) => {
@@ -45,7 +54,8 @@ export const getBarsAttempt = (state, action) => {
 export const getBarsSuccess = (state, action) => {
     let { day, data } = action
     let newAssets = state.assets
-    newAssets = newAssets.map(assetItem => { // Reconfigure assets with bar data
+    newAssets = newAssets.map((assetItem) => {
+        // Reconfigure assets with bar data
         try {
             let count = data[assetItem.symbol].length
             if (count > 0) {
@@ -70,19 +80,34 @@ export const getBarsSuccess = (state, action) => {
 
     const limitCallNo = 2
     if (state.getBarApiCallNo >= limitCallNo) {
-        return state.merge({ barFetching: false, error: false, errorMessage: '', assets: newAssets, getBarApiCallNo: 1 })
+        return state.merge({
+            barFetching: false,
+            error: false,
+            errorMessage: '',
+            assets: newAssets,
+            getBarApiCallNo: 1
+        })
     } else {
-        return state.merge({ barFetching: true, error: false, errorMessage: '', assets: newAssets, getBarApiCallNo: state.getBarApiCallNo + 1 })
+        return state.merge({
+            barFetching: true,
+            error: false,
+            errorMessage: '',
+            assets: newAssets,
+            getBarApiCallNo: state.getBarApiCallNo + 1
+        })
     }
 }
 
 export const getBarsFailure = (state, action) => {
-    return state.merge({ barFetching: false, error: true, errorMessage: action.error })
+    return state.merge({
+        barFetching: false,
+        error: true,
+        errorMessage: action.error
+    })
 }
 
-export const resetBars = (state, action) => (
+export const resetBars = (state, action) =>
     state.merge({ bars: null, preBars: null })
-)
 
 export const reducer = createReducer(INITIAL_STATE, {
     [Types.GET_ASSETS_ATTEMPT]: getAssetsAttempt,

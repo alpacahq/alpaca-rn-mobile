@@ -1,5 +1,5 @@
 import { call, put } from 'redux-saga/effects'
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import AppActions from '../Redux/AppRedux'
 
 export function* appStartAttempt(api, action) {
@@ -13,7 +13,6 @@ export function* appStartAttempt(api, action) {
 export function* exchangeTokenAttempt(api, action) {
     try {
         const response = yield call(api.alpacaExchangeToken, action.data)
-        console.log(12212, response)
         if (response.ok) {
             const { access_token } = response.data
             AsyncStorage.setItem('accessToken', access_token)

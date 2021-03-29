@@ -5,7 +5,7 @@ const images = {
     emergency: require('../Assets/Images/emergency.png'),
     search: require('../Assets/Images/search.png'),
     back: require('../Assets/Images/back.png'),
-    logo: require('../Assets/Images/logo.png'),
+    logo: require('../Assets/Images/logo.png')
 }
 
 export default images

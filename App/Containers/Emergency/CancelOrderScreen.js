@@ -1,25 +1,15 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    FlatList
-} from 'react-native'
+import { View, Text, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
 import OrdersActions from '../../Redux/OrdersRedux'
-import {
-    ApplicationStyles,
-    Images,
-    Colors,
-    Fonts
-} from '../../Themes'
+import { ApplicationStyles, Images, Colors, Fonts } from '../../Themes'
 import { size } from '../../Util/Helper'
 import Button from '../../Components/Button'
 import NavigationIcon from '../../Components/NavigationIcon'
 
 class CancelOrderScreen extends Component {
-
     state = {
         condition: 'CANCEL_ORDER',
         openOrders: []
@@ -27,26 +17,25 @@ class CancelOrderScreen extends Component {
 
     componentDidMount() {
         this.setState({ openOrders: this.props.openOrders })
+
+        const condition = this.props.route.params?.condition
+        this.props.navigation.setOptions({
+            headerLeft: () =>
+                condition === 'CANCEL_ORDER_SUCCESS' ? null : (
+                    <NavigationIcon
+                        onPress={() => this.props.navigation.pop()}
+                        source={Images.back}
+                    />
+                )
+        })
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.cancelingOrder && !nextProps.cancelingOrder) {
             this.setState({ condition: 'CANCEL_ORDER_SUCCESS' })
-            this.props.navigation.setParams({ condition: 'CANCEL_ORDER_SUCCESS' })
-        }
-    }
-
-    static navigationOptions = (props) => {
-        const condition = props.navigation.getParam('condition')
-        return {
-            headerLeft: condition === 'CANCEL_ORDER_SUCCESS' ?
-                null :
-                (
-                    <NavigationIcon
-                        onPress={() => props.navigation.pop()}
-                        source={Images.back}
-                    />
-                )
+            this.props.navigation.setParams({
+                condition: 'CANCEL_ORDER_SUCCESS'
+            })
         }
     }
 
@@ -54,12 +43,9 @@ class CancelOrderScreen extends Component {
      * Cancel open orders
      */
     cancelOrders = () => {
-        const {
-            openOrders,
-            cancelOrder,
-        } = this.props
+        const { openOrders, cancelOrder } = this.props
 
-        openOrders.map(item => {
+        openOrders.map((item) => {
             cancelOrder(item.id)
         })
     }
@@ -73,11 +59,11 @@ class CancelOrderScreen extends Component {
             content = (
                 <View style={styles.container}>
                     <Text style={styles.h1}>
-                        Cancelling{"\n"}
+                        Cancelling{'\n'}
                         All Open Orders
                     </Text>
                     <Text style={[styles.h3, { marginTop: size(20) }]}>
-                        You are cancelling all open orders.{"\n\n"}
+                        You are cancelling all open orders.{'\n\n'}
                         You currently have {openOrders.length} open orders.
                     </Text>
                     <Button
@@ -100,7 +86,7 @@ class CancelOrderScreen extends Component {
                     <FlatList
                         style={styles.list}
                         data={openOrders}
-                        keyExtractor={item => item.id}
+                        keyExtractor={(item) => item.id}
                         renderItem={({ item, index }) => {
                             return (
                                 <Text style={{ color: 'white' }}>
@@ -125,11 +111,7 @@ class CancelOrderScreen extends Component {
     }
 
     render() {
-        return (
-            <View style={styles.mainContainer}>
-                {this.renderContent()}
-            </View>
-        )
+        return <View style={styles.mainContainer}>{this.renderContent()}</View>
     }
 }
 
@@ -137,17 +119,17 @@ const styles = {
     ...ApplicationStyles.screen,
     h1: {
         ...Fonts.style.h1,
-        color: Colors.BLACK,
+        color: Colors.BLACK
     },
     h3: {
         ...Fonts.style.h3,
-        color: Colors.BLACK,
+        color: Colors.BLACK
     },
     button: {
         position: 'absolute',
         bottom: 0,
         left: 0,
-        right: 0,
+        right: 0
     },
     list: {
         flex: 1,
@@ -156,19 +138,20 @@ const styles = {
         paddingLeft: 5,
         paddingTop: 10,
         backgroundColor: Colors.COLOR_CORE_TEXT
-    },
+    }
 }
 
 const mapStateToProps = (state) => {
     return {
         cancelingOrder: state.orders.cancelingOrder,
-        openOrders: state.orders.openOrders,
+        openOrders: state.orders.openOrders
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        cancelOrder: order_id => dispatch(OrdersActions.cancelOrderAttempt(order_id)),
+        cancelOrder: (order_id) =>
+            dispatch(OrdersActions.cancelOrderAttempt(order_id))
     }
 }
 

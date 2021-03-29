@@ -6,9 +6,10 @@ import { size } from '../Util/Helper'
 const ApplicationStyles = {
     screen: {
         container: {
-            flex: 1,
+            flex: 1
         },
         mainContainer: {
+            backgroundColor: 'white',
             flex: 1,
             padding: size(33)
         },
@@ -36,20 +37,20 @@ const ApplicationStyles = {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: Colors.WHITE,
+            backgroundColor: Colors.WHITE
         },
         tabBarStyle: {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'rgb(250, 250, 250)',
+            backgroundColor: 'rgb(250, 250, 250)'
         },
         tabStyle: {
             paddingBottom: 0
         },
         tabBarImage: {
             width: Metrics.images.medium,
-            height: Metrics.images.medium,
+            height: Metrics.images.medium
         },
         separator: {
             height: 0.5,
@@ -60,7 +61,7 @@ const ApplicationStyles = {
         label: {
             ...Fonts.style.h3,
             color: Colors.COLOR_GRAY
-        },
+        }
     }
 }
 

@@ -1,58 +1,61 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    StyleSheet
-} from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import RNPickerSelect from 'react-native-picker-select'
 
-import {
-    ApplicationStyles,
-    Colors,
-    Fonts
-} from '../../Themes'
+import { ApplicationStyles, Colors, Fonts } from '../../Themes'
 import { size } from '../../Util/Helper'
 
 class TradeItem extends Component {
-
     constructor(props) {
         super(props)
 
         this.inputRefs = {}
         this.state = {
-            selectedValue: '',
+            selectedValue: ''
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ selectedValue: nextProps.selectedItem });
+        this.setState({ selectedValue: nextProps.selectedItem })
     }
 
     render() {
         const { label, items, disabled, onValueChange } = this.props
         return (
             <View style={styles.rowContainer}>
-                <Text style={styles.label}>
-                    {label}
-                </Text>
+                <Text style={styles.label}>{label}</Text>
                 <RNPickerSelect
                     placeholder={{
                         label: '',
                         value: null,
-                        color: Colors.COLOR_GOLD,
+                        color: Colors.COLOR_GOLD
                     }}
                     disabled={disabled}
                     items={items}
                     onValueChange={(value) => {
                         this.setState({
-                            selectedValue: value,
+                            selectedValue: value
                         })
                         onValueChange(value)
                     }}
                     style={{
-                        inputIOS: [pickerSelectStyles.inputIOS, { color: disabled ? Colors.COLOR_GRAY : Colors.COLOR_GOLD }],
-                        inputAndroid: [pickerSelectStyles.inputAndroid, { color: disabled ? Colors.COLOR_GRAY : Colors.COLOR_GOLD }]
+                        inputIOS: [
+                            pickerSelectStyles.inputIOS,
+                            {
+                                color: disabled
+                                    ? Colors.COLOR_GRAY
+                                    : Colors.COLOR_GOLD
+                            }
+                        ],
+                        inputAndroid: [
+                            pickerSelectStyles.inputAndroid,
+                            {
+                                color: disabled
+                                    ? Colors.COLOR_GRAY
+                                    : Colors.COLOR_GOLD
+                            }
+                        ]
                     }}
                     useNativeAndroidPickerStyle={false}
                     value={this.state.selectedValue}
@@ -80,7 +83,7 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: 5
-    },
+    }
 }
 
 const pickerSelectStyles = StyleSheet.create({
@@ -92,7 +95,7 @@ const pickerSelectStyles = StyleSheet.create({
         borderBottomColor: Colors.COLOR_GOLD,
         borderBottomWidth: 1,
         backgroundColor: 'white',
-        color: Colors.COLOR_GOLD,
+        color: Colors.COLOR_GOLD
     },
     inputAndroid: {
         width: size(130),
@@ -102,8 +105,8 @@ const pickerSelectStyles = StyleSheet.create({
         borderBottomColor: Colors.COLOR_GOLD,
         borderBottomWidth: 1,
         backgroundColor: 'white',
-        color: Colors.COLOR_GOLD,
-    },
-});
+        color: Colors.COLOR_GOLD
+    }
+})
 
 export default TradeItem

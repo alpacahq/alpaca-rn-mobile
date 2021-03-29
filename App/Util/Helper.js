@@ -1,8 +1,7 @@
-import { Platform } from 'react-native'
+import { Platform, Dimensions } from 'react-native'
 import moment from 'moment-timezone'
 import _ from 'lodash'
-import { showMessage, hideMessage } from "react-native-flash-message"
-import Dimensions from 'Dimensions'
+import { showMessage, hideMessage } from 'react-native-flash-message'
 
 const { width } = Dimensions.get('window')
 
@@ -25,7 +24,7 @@ export const size = (size) => {
  * Capitalize first character of string
  */
 export const capitalize = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 /**
@@ -40,7 +39,7 @@ export const changeTimeFormat = (value) => {
  */
 export const mergeArray = (array) => {
     var result = _(array)
-        .groupBy(x => x.status)
+        .groupBy((x) => x.status)
         .map((value, key) => ({ status: key, data: value }))
         .value()
 
@@ -59,20 +58,17 @@ export const convert = (value, percent = false) => {
     if (value > 0) {
         if (!percent) {
             return `+$${value}`
-        } else
-            return `+${value}%`
+        } else return `+${value}%`
     } else if (value < 0) {
         value = Math.abs(value)
         value = value.toFixed(2)
         if (!percent) {
             return `-$${value}`
-        } else
-            return `-${value}%`
+        } else return `-${value}%`
     } else {
         if (!percent) {
             return `$${value}`
-        } else
-            return `${value}%`
+        } else return `${value}%`
     }
 }
 
@@ -112,7 +108,7 @@ export const commafy = (num) => {
 export const showAlertMessage = (message, type) => {
     showMessage({
         message,
-        type,
+        type
     })
 }
 

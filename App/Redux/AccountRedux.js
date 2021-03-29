@@ -25,11 +25,20 @@ export const getAccountAttempt = (state, action) => {
 }
 
 export const getAccountSuccess = (state, action) => {
-    return state.merge({ fetching: false, error: false, errorMessage: '', account: action.data })
+    return state.merge({
+        fetching: false,
+        error: false,
+        errorMessage: '',
+        account: action.data
+    })
 }
 
 export const getAccountFailure = (state, action) => {
-    return state.merge({ fetching: false, error: true, errorMessage: action.error })
+    return state.merge({
+        fetching: false,
+        error: true,
+        errorMessage: action.error
+    })
 }
 
 export const configureAccountAttempt = (state, action) => {
@@ -41,7 +50,11 @@ export const configureAccountSuccess = (state, action) => {
 }
 
 export const configureAccountFailure = (state, action) => {
-    return state.merge({ fetching: false, error: true, errorMessage: action.error })
+    return state.merge({
+        fetching: false,
+        error: true,
+        errorMessage: action.error
+    })
 }
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -51,5 +64,5 @@ export const reducer = createReducer(INITIAL_STATE, {
     [Types.GET_ACCOUNT_FAILURE]: getAccountFailure,
     [Types.CONFIGURE_ACCOUNT_ATTEMPT]: configureAccountAttempt,
     [Types.CONFIGURE_ACCOUNT_SUCCESS]: configureAccountSuccess,
-    [Types.CONFIGURE_ACCOUNT_FAILURE]: configureAccountFailure,
+    [Types.CONFIGURE_ACCOUNT_FAILURE]: configureAccountFailure
 })

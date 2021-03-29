@@ -1,34 +1,23 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    Image,
-    FlatList
-} from 'react-native'
+import { View, Text, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 
-import {
-    ApplicationStyles,
-    Images,
-    Colors,
-    Metrics,
-    Fonts
-} from '../../Themes'
+import { ApplicationStyles, Images } from '../../Themes'
 import { size } from '../../Util/Helper'
 import OrderItem from './OrderItem'
 import NavigationIcon from '../../Components/NavigationIcon'
 
 class OrdersScreen extends Component {
-
-    static navigationOptions = (props) => {
-        return {
-            headerRight: (
+    componentDidMount() {
+        this.props.navigation.setOptions({
+            headerLeft: null,
+            headerRight: () => (
                 <NavigationIcon
-                    onPress={() => props.navigation.navigate('Search')}
+                    onPress={() => this.props.navigation.navigate('Search')}
                     source={Images.search}
                 />
-            ),
-        }
+            )
+        })
     }
 
     render() {
@@ -42,15 +31,18 @@ class OrdersScreen extends Component {
                     <FlatList
                         style={styles.list}
                         data={orders}
-                        keyExtractor={item => item.id}
+                        keyExtractor={(item) => item.id}
                         renderItem={({ item, index }) => {
                             return (
                                 <OrderItem
                                     order={item}
                                     onPress={() =>
-                                        this.props.navigation.navigate('Symbol', {
-                                            value: item
-                                        })
+                                        this.props.navigation.navigate(
+                                            'Symbol',
+                                            {
+                                                value: item
+                                            }
+                                        )
                                     }
                                 />
                             )
@@ -58,7 +50,9 @@ class OrdersScreen extends Component {
                     />
                     <Text
                         style={[styles.label, { marginTop: 10 }]}
-                        onPress={() => this.props.navigation.navigate('Disclosure')}
+                        onPress={() =>
+                            this.props.navigation.navigate('Disclosure')
+                        }
                     >
                         Disclosures
                     </Text>
@@ -80,7 +74,7 @@ const styles = {
 const mapStateToProps = (state) => {
     return {
         openOrders: state.orders.openOrders,
-        closedOrders: state.orders.closedOrders,
+        closedOrders: state.orders.closedOrders
     }
 }
 

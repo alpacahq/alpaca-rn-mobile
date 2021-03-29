@@ -1,48 +1,36 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    AsyncStorage,
-} from 'react-native'
+import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import OrdersActions from '../../Redux/OrdersRedux'
 import AccountActions from '../../Redux/AccountRedux'
-import {
-    ApplicationStyles,
-    Images,
-    Colors,
-    Fonts
-} from '../../Themes'
+import { ApplicationStyles, Images, Colors, Fonts } from '../../Themes'
 import { size } from '../../Util/Helper'
 import Button from '../../Components/Button'
 import NavigationIcon from '../../Components/NavigationIcon'
 
 class EmergencyScreen extends Component {
-
-    static navigationOptions = (props) => {
-        return {
-            headerRight: (
+    componentDidMount() {
+        this.props.navigation.setOptions({
+            headerLeft: null,
+            headerRight: () => (
                 <NavigationIcon
-                    onPress={() => props.navigation.navigate('Search')}
+                    onPress={() => this.props.navigation.navigate('Search')}
                     source={Images.search}
                 />
-            ),
-        }
+            )
+        })
     }
 
     logOut = async () => {
-        await AsyncStorage.removeItem("accessToken");
-        this.props.navigation.push("Setup", { operation: "logout" });
+        await AsyncStorage.removeItem('accessToken')
+        this.props.navigation.push('Setup', { operation: 'logout' })
     }
 
     render() {
-        const {
-            openOrders,
-            positions,
-            account
-        } = this.props
+        const { openOrders, positions, account } = this.props
         const suspendStatus = account.trade_suspended_by_user
 
         return (
@@ -51,22 +39,34 @@ class EmergencyScreen extends Component {
                     <Button
                         style={styles.button}
                         color={suspendStatus ? Colors.COLOR_GREEN : Colors.RED}
-                        label={suspendStatus ? "RECOVER API" : "SUSPEND API"}
-                        onPress={() => this.props.navigation.navigate(suspendStatus ? 'RecoverAPI' : 'SuspendAPI')}
+                        label={suspendStatus ? 'RECOVER API' : 'SUSPEND API'}
+                        onPress={() =>
+                            this.props.navigation.navigate(
+                                suspendStatus ? 'RecoverAPI' : 'SuspendAPI'
+                            )
+                        }
                     />
-                    <Text style={styles.label}>Open Positions: {positions.length}</Text>
+                    <Text style={styles.label}>
+                        Open Positions: {positions.length}
+                    </Text>
                     <Button
                         style={styles.button}
                         label="LIQUIDATE ALL"
                         disabled={positions.length === 0}
-                        onPress={() => this.props.navigation.navigate('Liquidation')}
+                        onPress={() =>
+                            this.props.navigation.navigate('Liquidation')
+                        }
                     />
-                    <Text style={styles.label}>Open Orders: {openOrders.length}</Text>
+                    <Text style={styles.label}>
+                        Open Orders: {openOrders.length}
+                    </Text>
                     <Button
                         style={styles.button}
                         label="CANCEL ALL"
                         disabled={openOrders.length === 0}
-                        onPress={() => this.props.navigation.navigate('CancelOrder')}
+                        onPress={() =>
+                            this.props.navigation.navigate('CancelOrder')
+                        }
                     />
                     <Button
                         style={styles.button}
@@ -75,7 +75,9 @@ class EmergencyScreen extends Component {
                     />
                     <Text
                         style={[styles.label, { marginTop: size(30) }]}
-                        onPress={() => this.props.navigation.navigate('Disclosure')}
+                        onPress={() =>
+                            this.props.navigation.navigate('Disclosure')
+                        }
                     >
                         Disclosures
                     </Text>
@@ -97,8 +99,8 @@ const styles = {
         marginBottom: size(8)
     },
     button: {
-        marginBottom: size(25),
-    },
+        marginBottom: size(25)
+    }
 }
 
 const mapStateToProps = (state) => {
@@ -113,8 +115,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-    }
+    return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmergencyScreen)
