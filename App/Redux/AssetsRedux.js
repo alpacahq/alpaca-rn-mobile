@@ -57,9 +57,14 @@ export const getBarsSuccess = (state, action) => {
     newAssets = newAssets.map((assetItem) => {
         // Reconfigure assets with bar data
         try {
-            let count = data[assetItem.symbol].length
-            if (count > 0) {
-                let associatedBar = data[assetItem.symbol][count - 1] // Get last item
+            // TODO: bars API v2
+            // let count = data[assetItem.symbol].length // bars v1
+            let count = data['bars'].length // bars v2 (one symbol)
+            // if (count > 0) { // bars v1
+            // bars v2 (one symbol)
+            if (count > 0 && assetItem.symbol === data['symbol']) {
+                // let associatedBar = data[assetItem.symbol][count - 1] // Get last item
+                let associatedBar = data['bars'][count - 1] // Get last item
                 if (day === 'today') {
                     assetItem = {
                         ...assetItem,

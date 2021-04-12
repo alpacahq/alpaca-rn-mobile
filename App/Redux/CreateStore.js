@@ -15,8 +15,13 @@ export default (rootReducer, rootSaga) => {
     /* ------------- Assemble Middleware ------------- */
     enhancers.push(applyMiddleware(...middleware))
 
+    const composeEnhancers =
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
     const createAppropriateStore = createStore
-    const store = createAppropriateStore(rootReducer, compose(...enhancers))
+    const store = createAppropriateStore(
+        rootReducer,
+        composeEnhancers(...enhancers)
+    )
 
     // kick off root saga
     sagaMiddleware.run(rootSaga)

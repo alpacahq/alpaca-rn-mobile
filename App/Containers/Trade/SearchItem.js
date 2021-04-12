@@ -22,8 +22,8 @@ class SearchItem extends Component {
             if (assets) {
                 assets.map((assetItem) => {
                     if (assetItem.symbol === item.symbol) {
-                        currentStockPrice = assetItem.todayBar.o
-                        preClosePrice = assetItem.preBar.c
+                        currentStockPrice = assetItem.todayBar?.o
+                        preClosePrice = assetItem.preBar?.c
                         priceDif = currentStockPrice - preClosePrice
                         percentage = convert(
                             ((priceDif / preClosePrice) * 100).toFixed(2),
@@ -46,12 +46,16 @@ class SearchItem extends Component {
                             <Text style={symbolStyle}>{item.symbol}</Text>
                         </View>
                         <View style={styles.valueContainer}>
-                            <Text style={stockPriceStyle}>
-                                ${formatValue(currentStockPrice)}
-                            </Text>
-                            <Text style={plStyle}>
-                                {`${convert(priceDif)} (${percentage})`}
-                            </Text>
+                            {currentStockPrice && (
+                                <Text style={stockPriceStyle}>
+                                    ${formatValue(currentStockPrice)}
+                                </Text>
+                            )}
+                            {priceDif !== 'NaN' && percentage !== 'NaN%' && (
+                                <Text style={plStyle}>
+                                    {`${convert(priceDif)} (${percentage})`}
+                                </Text>
+                            )}
                         </View>
                         <View style={styles.separator} />
                     </View>

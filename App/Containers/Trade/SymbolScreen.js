@@ -33,7 +33,7 @@ class SymbolScreen extends Component {
         const value = route.params?.value
 
         getBars(
-            '1D',
+            '1Day',
             value.symbol,
             getYesterdayStart(),
             getYesterdayEnd(),

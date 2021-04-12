@@ -19,7 +19,7 @@ export function* getAssetsAttempt(api, action) {
             //         symbols = symbols + div + item.symbol
             //     })
             //     yield put(AssetsActions.getBarsAttempt('1Min', symbols, getTodayStart(), getTodayEnd(), 'today'))
-            //     yield put(AssetsActions.getBarsAttempt('1D', symbols, getYesterdayStart(), getYesterdayEnd(), 'yesterday'))
+            //     yield put(AssetsActions.getBarsAttempt('1Day', symbols, getYesterdayStart(), getYesterdayEnd(), 'yesterday'))
             // }
         } else {
             const message = response.data.message || 'Something went wrong'

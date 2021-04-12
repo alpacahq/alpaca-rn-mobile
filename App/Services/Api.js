@@ -48,7 +48,9 @@ const create = (baseURL = config.BASE_URL) => {
     const getPositions = () => api.get('v2/positions')
     const getAssets = () => api.get('v2/assets?status=active')
     const getBars = (timeframe, symbols, start, end) =>
-        dataApi.get(`v1/bars/${timeframe}?symbols=${symbols}&limit=2`)
+        dataApi.get(
+            `v2/stocks/${symbols}/bars?start=${start}&end=${end}&timeframe=${timeframe}&limit=2`
+        )
     const alpacaExchangeToken = (params) =>
         authApi.post(config.TOKEN_ENDPOINT, params)
 

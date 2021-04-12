@@ -65,19 +65,20 @@ class SearchScreen extends Component {
             filteredItems
         })
 
-        let symbols = ''
-        _.map(filteredItems, function (item) {
-            let div = symbols.length > 0 ? ',' : ''
-            symbols = symbols + div + item.symbol
-        })
-        getBars('1Min', symbols, getTodayStart(), getTodayEnd(), 'today')
-        getBars(
-            '1D',
-            symbols,
-            getYesterdayStart(),
-            getYesterdayEnd(),
-            'yesterday'
-        )
+        // TODO: bars API v2
+        // let symbols = ''
+        // _.map(filteredItems, function (item) {
+        //     let div = symbols.length > 0 ? ',' : ''
+        //     symbols = symbols + div + item.symbol
+        // })
+        // getBars('1Min', symbols, getTodayStart(), getTodayEnd(), 'today')
+        // getBars(
+        //     '1Day',
+        //     symbols,
+        //     getYesterdayStart(),
+        //     getYesterdayEnd(),
+        //     'yesterday'
+        // )
     }
 
     render() {
