@@ -63,7 +63,7 @@ yarn android
 
 -   Get client id and secret
 
-You will need to specify client id and secret in `App/config.js` to get the app working.
+You will need to specify `AUTH_CLIENT_ID` and `AUTH_CLIENT_SECRET` in `.env` file to get the app working.
 
 Go to [OAuth Apps](https://app.alpaca.markets/brokerage/apps/manage) and get client id/secret by creating new app.
 (The redirect uri should be `alpacamobile://oauth`)
