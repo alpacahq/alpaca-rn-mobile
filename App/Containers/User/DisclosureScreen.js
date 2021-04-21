@@ -98,8 +98,8 @@ class DisclosureScreen extends Component {
                     Commission Free trading means that there are no commission
                     charges for Alpaca self-directed individual cash brokerage
                     accounts that trade U.S. listed securities through an API.
-                    Relevant SEC and FINRA fees may apply.{'\n\n'}© 2019 Alpaca
-                    Securities LLC. All rights reserved.{'\n\n'}© 2019 AlpacaDB.
+                    Relevant SEC and FINRA fees may apply.{'\n\n'}© 2021 Alpaca
+                    Securities LLC. All rights reserved.{'\n\n'}© 2021 AlpacaDB.
                     All rights reserved.{'\n\n'}
                 </Text>
             </ScrollView>

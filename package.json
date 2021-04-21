@@ -26,6 +26,7 @@
     "react-native-check-box": "^2.1.7",
     "react-native-custom-tabs": "git+https://github.com/riseworld27/react-native-custom-tabs.git",
     "react-native-dismiss-keyboard": "^1.0.0",
+    "react-native-dotenv": "^2.5.5",
     "react-native-elements": "^3.3.0",
     "react-native-flash-message": "^0.1.23",
     "react-native-gesture-handler": "^1.10.3",

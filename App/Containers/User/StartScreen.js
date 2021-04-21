@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 import RNPickerSelect from 'react-native-picker-select'
 import { CustomTabs } from 'react-native-custom-tabs'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } from '@env'
 
 import AppActions from '../../Redux/AppRedux'
 import { ApplicationStyles, Colors, Images } from '../../Themes'
@@ -26,8 +27,8 @@ class StartScreen extends Component {
 
         this.inputRefs = {}
         this.state = {
-            clientId: config.AUTH_CLIENT_ID,
-            clientSecret: config.AUTH_CLIENT_SECRET,
+            clientId: AUTH_CLIENT_ID,
+            clientSecret: AUTH_CLIENT_SECRET,
             authorizationEndpoint: config.AUTHORIZATION_ENDPOINT,
             tokenEndpoint: config.TOKEN_ENDPOINT,
             redirectUrl: 'alpacamobile://oauth',

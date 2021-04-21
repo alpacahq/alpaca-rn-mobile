@@ -1,5 +1,6 @@
 import apisauce from 'apisauce'
 import base64 from 'react-native-base64'
+import { AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } from '@env'
 
 import config from '../config'
 
@@ -22,9 +23,7 @@ const create = (baseURL = config.BASE_URL) => {
             'content-type': 'application/x-www-form-urlencoded',
             Authorization:
                 'Basic ' +
-                base64.encode(
-                    `${config.AUTH_CLIENT_ID}:${config.AUTH_CLIENT_SECRET}`
-                )
+                base64.encode(`${AUTH_CLIENT_ID}:${AUTH_CLIENT_SECRET}`)
         },
         timeout: 25000
     })

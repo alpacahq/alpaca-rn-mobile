@@ -4,10 +4,8 @@ const config = {
     // BASE_URL: 'https://api.alpaca.markets/',
     BASE_URL: 'https://paper-api.alpaca.markets/',
     DATA_BASE_URL: 'https://data.alpaca.markets/',
-    AUTH_CLIENT_ID: '',
-    AUTH_CLIENT_SECRET: '',
     AUTHORIZATION_ENDPOINT: 'https://app.alpaca.markets/oauth/authorize',
-    TOKEN_ENDPOINT: 'https://api.alpaca.markets/oauth/token',
+    TOKEN_ENDPOINT: 'https://api.alpaca.markets/oauth/token'
 }
 
-export default config;
+export default config
